@@ -8,6 +8,10 @@ body {
   font-family: Avenir Black;
 }
 
+#gamescreen {
+  border: 1px solid white;
+}
+
 .title {
   margin-top: 2%;
   margin-left: 5%;
