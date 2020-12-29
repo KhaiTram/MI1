@@ -2,13 +2,17 @@ html {
   scroll-behavior: smooth;
 }
 
+#test{
+  padding: 20%;
+}
+
 body {
   background-color: black;
   color:white;
   font-family: Avenir Black;
 }
 
-#gamescreen {
+#gameScreen {
   border: 1px solid white;
 }
 
