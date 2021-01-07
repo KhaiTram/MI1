@@ -1,0 +1,39 @@
+
+.navbar {
+    overflow: hidden;
+    background-color: #333;
+  }
+  
+.navbar a {
+    float:right;
+    max-width:100px;
+    margin:auto;
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+ }
+
+ #logo{
+     float:left;
+ }
+
+ h1{
+    text-align: center;
+    font-size: 500%;
+ }
+
+ h2{
+    text-align: center;
+    font-size: 300%;
+ }
+
+ .column {
+    float:left;
+    width: 30%;
+    height: 300px;
+    margin: 1.66%;
+    background-color:#aaa;
+    text-decoration: none;
+  }
