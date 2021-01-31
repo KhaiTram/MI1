@@ -6,7 +6,7 @@ html {
 body {
     height: 100%;
     margin: 0;
-    background-image:linear-gradient(#283048,#859398);
+    background-image:linear-gradient(#2497e4,#6DD5FA);
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
@@ -14,6 +14,7 @@ body {
 h1 {
     font-family: "Copperplate", fantasy , serif;    
     text-align: center;
+    color: #ddd;
     font-size: 35px;
     -webkit-text-stroke-width: 0.3px;
     -webkit-text-stroke-color: WHITE;

@@ -1,23 +1,27 @@
+body {
+   height: 100%;
+   margin: 0;
+   background-image:linear-gradient(#2497e4,#6DD5FA);
+   background-repeat: no-repeat;
+   background-attachment: fixed;
+}
+
+.title{
+   text-align: center;
+   color: white;
+   font-size: 300%;
+}
 
 .navbar {
-    overflow: hidden;
-    background-color: #333;
-  }
+   display: flex;
+   flex-wrap: wrap;
+ }
   
-.navbar a {
-    float:right;
-    max-width:100px;
-    margin:auto;
-    display: inline-block;
-    color: white;
-    text-align: center;
-    padding: 14px 20px;
-    text-decoration: none;
- }
-
- #logo{
-     float:left;
- }
+  
+.navitem{
+   padding: 1%;
+   flex: 15%;
+}
 
  h1{
     text-align: center;
@@ -28,12 +32,3 @@
     text-align: center;
     font-size: 300%;
  }
-
- .column {
-    float:left;
-    width: 30%;
-    height: 300px;
-    margin: 1.66%;
-    background-color:#aaa;
-    text-decoration: none;
-  }
