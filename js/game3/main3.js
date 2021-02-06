@@ -21,6 +21,7 @@ window.addEventListener("load", function(event) {
   
       display.fill(game.world.background_color);
       display.drawRectangle(game.world.player.x, game.world.player.y, game.world.player.width, game.world.player.height, game.world.player.color);
+      display.drawRectangle(game.world.enemy.x, game.world.enemy.y, game.world.enemy.width, game.world.enemy.height, game.world.enemy.color);
       display.render();
   
     };
@@ -32,6 +33,7 @@ window.addEventListener("load", function(event) {
       if (controller.up.active)    { game.world.player.jump(); controller.up.active = false; }
   
       game.update();
+
   
     };
   
