@@ -68,11 +68,11 @@ const Engine = function (timeStep, update, render) {
 
 };
 
-//protype zum erveitern Objekt mit start und stop funktion()
+//protype zum erveitern Objekt mit Methoden
 Engine.prototype = {
 
     constructor: Engine,
-
+    // Methode zum starten der Funktion 
     start: function () {
 
         this.timeLastUpdate = this.timeStep;
