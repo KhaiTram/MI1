@@ -13,9 +13,9 @@ class Engine {
 
         this.timeLastUpdate = 0;// Zeit die seit dem letzten Update vergangen ist
         this.requestAnimationFrame = undefined;//referenz auf die window requestanimationFrame methode. wird unten zugeordnet
-            this.time = undefined;// Letzter Zeitpunkt in der die Gameloop getriggert wird
-            this.timeStep = timeStep;// in welchen Zeitabstand geupdated werden soll
-            this.updated = false;// Indikator dass gerendert werden soll
+        this.time = undefined;// Letzter Zeitpunkt in der die Gameloop getriggert wird
+        this.timeStep = timeStep;// in welchen Zeitabstand geupdated werden soll
+        this.updated = false;// Indikator dass gerendert werden soll
         this.update = update;// update Funktion die übergeben wird
         this.render = render;// render Funktion die übergeben wird
 
@@ -65,7 +65,7 @@ class Engine {
 
     //Arrow function wird genutzt
 
-    handleLoop = (timeStamp)=>{
+    handleLoop = (timeStamp) => {
         this.loop(timeStamp);
     }
 
