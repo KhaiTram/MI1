@@ -1,7 +1,7 @@
 //Author: Khai Tram
 
 //Welt Konstanten
-const INIT_GRAVITY_VALUE = 3;
+const INIT_GRAVITY_VALUE = 1;
 const INIT_FRICTION_VALUE = 0.9;
 const GAME_WORLD_HEIGHT = 1080;
 const GAME_WORLD_WIDTH = 1920;
@@ -194,15 +194,10 @@ class Animator {
     }
 
     loop() {
-
         this.count++;
-
         while (this.count > this.delay) {
-
             this.count -= this.delay;
-
             this.frame_index = (this.frame_index < this.frame_set.length - 1) ? this.frame_index + 1 : 0;
-
             this.frame_value = this.frame_set[this.frame_index];
 
         }
