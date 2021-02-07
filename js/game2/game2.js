@@ -47,7 +47,6 @@ class World {
     }
 }
 
-
 class Player {
     constructor() {
         this.color = "#ff0000";
