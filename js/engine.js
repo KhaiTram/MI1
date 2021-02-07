@@ -12,9 +12,9 @@ class Engine {
     constructor(timeStep, update, render) {
 
         this.timeLastUpdate = 0;// Zeit die seit dem letzten Update vergangen ist
-        this.requestAnimationFrame = undefined,//referenz auf die window requestanimationFrame methode. wird unten zugeordnet
-            this.time = undefined,// Letzter Zeitpunkt in der die Gameloop getriggert wird
-            this.timeStep = timeStep,// in welchen Zeitabstand geupdated werden soll
+        this.requestAnimationFrame = undefined;//referenz auf die window requestanimationFrame methode. wird unten zugeordnet
+            this.time = undefined;// Letzter Zeitpunkt in der die Gameloop getriggert wird
+            this.timeStep = timeStep;// in welchen Zeitabstand geupdated werden soll
             this.updated = false;// Indikator dass gerendert werden soll
         this.update = update;// update Funktion die übergeben wird
         this.render = render;// render Funktion die übergeben wird
