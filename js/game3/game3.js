@@ -1,181 +1,269 @@
 //Author: Khai Tram
 
-const Game = function () {
+//Welt Konstanten
+const INIT_GRAVITY_VALUE = 3;
+const INIT_FRICTION_VALUE = 0.9;
+const GAME_WORLD_HEIGHT = 1080;
+const GAME_WORLD_WIDTH = 1920;
 
-    this.world = {
+//Spieler Konstanten
+const PLAYER_IMAGE_URL = "pictures/Ninja.png";
+const PLAYER_IMAGE_COLS = 9;
+const PLAYER_START_X = 20;
+const PLAYER_START_Y = 50;
+const PLAYER_HEIGHT = 224;
+const PLAYER_WIDTH = 120;
 
-        background_color: "#9370db",
+//Virus Konstanten
+const VIRUS_IMAGE_URL = "pictures/game3/corona.png";
+const VIRUS_IMAGE_COLS = 1;
+const VIRUS_HEIGHT = 100;
+const VIRUS_WIDTH = 100;
+const VIRUS_START_X = 200;
+const VIRUS_START_Y = 50;
+const INITIAL_VIRUS_VELOCITY = 0;
 
-        friction: 0.9,
-        gravity: 3,
 
-        player: new Game.Player(),
-        enemy: new Game.Enemy(),
-        
-        height: 72,
-        width: 128,
 
-        collideObject: function (object) {
 
-            if (object.x < 0) {
-                object.x = 0; object.velocity_x = 0;
-            }
-            else if (object.x + object.width > this.width) {
-                object.x = this.width - object.width; object.velocity_x = 0;
-            }
-            if (object.y < 0) {
-                object.y = 0; object.velocity_y = 0;
-            }
-            else if (object.y + object.height > this.height) {
-                object.jumping = false;
-                object.y = this.height - object.height; object.velocity_y = 0;
-            }
+class Game {
 
-        },
+    constructor() {
+        this.world = new World(INIT_GRAVITY_VALUE, INIT_FRICTION_VALUE, GAME_WORLD_HEIGHT, GAME_WORLD_WIDTH);
+    }
 
-        collideObjectFloor: function (object) {
-
-            if (object.x < -10) {
-                object.x = 150;
-            }
-            
-            if (object.y < 0) {
-                object.y = 0; object.velocity_y = 0;
-            }
-            else if (object.y + object.height > this.height) {
-                object.y = this.height - object.height; object.velocity_y = 0;
-            }
-
-        },
-
-        collideObjectObject: function (object1,object2) {
-
-            if (object2.x >= 0 && object2.x <=10 && object1.y > 52) {
-                console.log("Kollidiert!!!!")
-                object2.velocity_x = 0;
-                
-            }
-            
-           
-
-        },
-
-        update: function () {
-
-        
-            this.collideObjectObject(this.player,this.enemy);
-
-            this.player.velocity_y += this.gravity;
-            this.player.update();
-
-            this.player.velocity_x *= this.friction;
-            this.player.velocity_y *= this.friction;
-
-            this.collideObject(this.player);
-
-            this.enemy.velocity_y += this.gravity;
-            this.enemy.update();
-
-            this.collideObjectFloor(this.enemy);
-            
-            
-            
-            /*console.log(this.player.y);
-            console.log(this.player.x);
-
-            console.log("ENEMY " + this.enemy.y);
-            console.log("ENEMY " + this.enemy.x);
-*/
-
-        }
-
-    };
-
-    this.update = function () {
-
+    update() {
         this.world.update();
+
+    }
+};
+
+class World {
+    constructor(gravity, friction, height, width) {
+        this.background_color = "blue";
+        this.friction = friction;
+        this.gravity = gravity;
+
+        this.virus = new Virus(VIRUS_IMAGE_URL,VIRUS_HEIGHT,VIRUS_WIDTH);
+        this.player = new Player(PLAYER_IMAGE_URL, PLAYER_HEIGHT, PLAYER_WIDTH);
+
+        this.height = height;
+        this.width = width;
+
+     
+       
         
 
-    };
+    }
 
-};
+    collideObject(object) {
 
-Game.prototype = { constructor: Game };
+        if (object.x < 0) { object.x = 0; object.velocityX = 0; }
+        else if (object.x + object.width > this.width) { object.x = this.width - object.width; object.velocityX = 0; }
+        if (object.y < 0) { object.y = 0; object.velocityY = 0; }
+        else if (object.y + object.height > this.height) { object.jumping = false; object.y = this.height - object.height; object.velocityY = 0; }
 
-Game.Player = function (x, y) {
+    }
 
-    this.color = "#ff0000";
-    this.height = 10;
-    this.width = 10;
-    this.jumping = true;
-    this.velocity_x = 0;
-    this.velocity_y = 0;
-    this.x = 0;
-    this.y = 0;
+    collideObjectFloor(object) {
 
-};
-
-Game.Enemy = function (x, y) {
-
-    this.color = "#059022";
-    this.height = 10;
-    this.width = 10;
-    this.velocity_x = -1.5;
-    this.velocity_y = 0;
-    this.x = 100;
-    this.y = 100;
-    
-
-};
-Game.Enemy.prototype = {
-
-    constructor: Game.Enemy,
-
-    jump: function () {
-
-        if (!this.jumping) {
-
-            this.jumping = true;
-            this.velocity_y -= 20;
-
+        if (object.x < -10) {
+            object.x = 150;
+        }
+        
+        if (object.y < 0) {
+            object.y = 0; object.velocityY = 0;
+        }
+        else if (object.y + object.height > this.height) {
+            object.y = this.height - object.height; object.velocityY = 0;
         }
 
-    },
-   
-    update: function () {
-        this.velocity_x -= 0.003;
-        this.x += this.velocity_x;
-        this.y += this.velocity_y;
+    }
+
+    collideObjectObject(object1,object2) {
+
+      /*  if (object2.x >= 0 && object2.x <=10 && object1.y > 52) {
+            console.log("Kollidiert!!!!")
+            object2.velocityX = 0;
+            
+        }*/
+        
        
 
     }
-    
-};
 
-Game.Player.prototype = {
 
-    constructor: Game.Player,
+    update() {
 
-    jump: function () {
+        this.collideObjectObject(this.player,this.virus);
 
-        if (!this.jumping) {
+        this.player.velocityY += this.gravity;
+        this.player.updatePos();
+        this.player.updateAn();
+        this.player.velocityX *= this.friction;
+        this.player.velocityY *= this.friction;
 
-            this.jumping = true;
-            this.velocity_y -= 20;
+        this.collideObject(this.player);
+
+        
+        this.virus.velocityY += this.gravity;
+        this.virus.updatePos();
+
+        this.collideObject(this.virus);
+       
+       // this.collideObjectFloor(this.virus);
 
         }
-
-    },
-
-    
-    moveLeft: function () { this.velocity_x -= 0.5; },
-    moveRight: function () { this.velocity_x += 0.5; },
-
-    update: function () {
-
-        this.x += this.velocity_x;
-        this.y += this.velocity_y;
+        
 
     }
 
-};
+
+
+
+
+class GameObject {
+    constructor(spriteSheet, height, width) {
+        this.spriteSheet = getImg(spriteSheet);
+        this.height = height;
+        this.width = width;
+        this.velocityX = 0;
+        this.velocityY = 0;
+    }
+
+}
+
+class Player extends GameObject {
+
+    constructor(spriteSheet, height, width) {
+        super(spriteSheet, height, width);
+        this.jumping = true;
+        this.direction = -1;
+        this.x = PLAYER_START_X;
+        this.y = PLAYER_START_Y;
+        /* frameSets = {
+            "idle": [4],
+            "jump-left": [3],
+            "move-left": [2,3],
+            "jump-right": [5],
+            "move-right": [5,6]
+        } */
+    }
+
+    jump() {
+        if (!this.jumping) {
+
+            this.jumping = true;
+            this.velocityY -= 50;
+
+        }
+    }
+
+    moveLeft() {
+        this.velocityX -= 3;
+        this.direction = -1;
+    }
+    moveRight() {
+        this.velocityX += 3;
+        this.direction = 1;
+    }
+
+    updatePos() {
+
+        this.x += this.velocityX;
+        this.y += this.velocityY;
+
+    }
+
+    updateAn() {
+
+    }
+
+}
+
+class spriteSheet {
+    constructor() {
+
+    }
+}
+
+class Animator {
+    constructor(frameSet, Delay) {
+
+        this.count = 0;
+        this.delay = (delay >= 1) ? delay : 1;
+        this.frame_set = frame_set;
+        this.frame_index = 0;
+        this.frame_value = frame_set[0];
+        this.mode = "pause";
+
+    };
+
+    animate() {
+        switch (this.mode) {
+
+            case "loop": this.loop(); break;
+            case "pause": break;
+
+        }
+    };
+
+    changeFrameSet(frame_set, mode, delay = 10, frame_index = 0) {
+        if (this.frame_set === frame_set) { return; }
+
+        this.count = 0;
+        this.delay = delay;
+        this.frame_set = frame_set;
+        this.frame_index = frame_index;
+        this.frame_value = frame_set[frame_index];
+        this.mode = mode;
+
+    }
+
+    loop() {
+
+        this.count++;
+
+        while (this.count > this.delay) {
+
+            this.count -= this.delay;
+
+            this.frame_index = (this.frame_index < this.frame_set.length - 1) ? this.frame_index + 1 : 0;
+
+            this.frame_value = this.frame_set[this.frame_index];
+
+        }
+
+    }
+}
+
+class Virus extends GameObject {
+    constructor(spriteSheet, height, width, velocityX) {
+        super(spriteSheet, height, width);
+        this.x = VIRUS_START_X;
+        this.y = VIRUS_START_Y;
+        this.velocityX = velocityX;
+        
+
+    };
+
+    updatePos() {
+      
+       // this.velocityX -= 0.003;
+        this.x += this.velocityX;
+        this.y += this.velocityY;
+
+    }
+
+
+}
+
+
+function getImg(spriteSheetURL) {
+    let spriteSheet = new Image();
+    spriteSheet.src = spriteSheetURL;
+    return spriteSheet;
+}
+
+
+

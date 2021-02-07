@@ -1,58 +1,66 @@
-//Author: Khai
+//author Khai
+
 
 window.addEventListener("load", function(event) {
 
-    "use strict";
   
+  "use strict";
+  
+  var keyDownUp = function(event) {
     
-    var keyDownUp = function(event) {
+    controller.keyDownUp(event.type, event.keyCode);
+    
+  };
   
-      controller.keyDownUp(event.type, event.keyCode);
+  var resize = function(event) {
+    
+    display.resize(document.documentElement.clientWidth - 32, document.documentElement.clientHeight - 32, game.world.height / game.world.width);
+    display.render();
+    
+  };
   
-    };
-  
-    var resize = function(event) {
-      display.resize(document.documentElement.clientWidth - 32, document.documentElement.clientHeight - 32, game.world.height / game.world.width);
+  var render = function() {
+    
+    display.fill(game.world.background_color);
+    //display.drawRectangle(game.world.player.x, game.world.player.y, game.world.player.width, game.world.player.height, "red");
+    //!display.drawObject(game.world.player.spriteSheet, 600, 0, game.world.player.x, game.world.player.y, game.world.player.width, game.world.player.height);
+    
+    display.drawObject(game.world.virus.spriteSheet,game.world.virus.x, game.world.virus.y);  
+      /* display.drawObject(assets_manager.tile_set_image,
+        frame.x, frame.y,
+        game.world.player.x + Math.floor(game.world.player.width * 0.5 - frame.width * 0.5) + frame.offset_x,
+        game.world.player.y + frame.offset_y, frame.width, frame.height); */
       display.render();
+  };
   
-    };
-  
-    var render = function() {
-  
-      display.fill(game.world.background_color);
-      display.drawRectangle(game.world.player.x, game.world.player.y, game.world.player.width, game.world.player.height, game.world.player.color);
-      display.drawRectangle(game.world.enemy.x, game.world.enemy.y, game.world.enemy.width, game.world.enemy.height, game.world.enemy.color);
-      display.render();
-  
-    };
-  
-    var update = function() {
-  
-      if (controller.left.active)  { game.world.player.moveLeft();  }
-      if (controller.right.active) { game.world.player.moveRight(); }
-      if (controller.up.active)    { game.world.player.jump(); controller.up.active = false; }
-  
-      game.update();
+  var update = function() {
 
-  
-    };
-  
-  
-    var controller = new Controller();
-    var display    = new Display(document.querySelector("canvas"));
-    var game       = new Game();
-    var engine     = new Engine(1000/30, render, update);
-  
-    display.buffer.canvas.height = game.world.height;
-    display.buffer.canvas.width = game.world.width;
-  
-    window.addEventListener("keydown", keyDownUp);
-    window.addEventListener("keyup",   keyDownUp);
-    window.addEventListener("resize",  resize);
-  
-    resize();
-  
-    engine.start();
-  
-  });
-  
+    if (controller.left.active)  { game.world.player.moveLeft();  }
+    if (controller.right.active) { game.world.player.moveRight(); }
+    if (controller.up.active)    { game.world.player.jump(); controller.up.active = false; }
+    
+    game.update();
+    controller.readTextFile("data.txt");
+
+  };
+
+
+
+  var controller = new Controller();
+  var display    = new Display(document.querySelector("canvas"));
+  var game       = new Game();
+  var engine     = new Engine(1000/30, render, update);
+
+
+  display.buffer.canvas.height = game.world.height;
+  display.buffer.canvas.width = game.world.width;
+
+  window.addEventListener("keydown", keyDownUp);
+  window.addEventListener("keyup",   keyDownUp);
+  window.addEventListener("resize",  resize);
+
+  resize();
+
+  engine.start();
+
+});
