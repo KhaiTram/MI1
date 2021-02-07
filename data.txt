@@ -1,0 +1,3 @@
+Gesundheit:8
+
+Hunger:5

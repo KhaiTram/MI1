@@ -17,6 +17,11 @@ class Display{
 
   };
 
+  drawObject(image, source_x, source_y, destination_x, destination_y, width, height) {
+    this.buffer.drawImage(image, source_x, source_y, width, height, Math.round(destination_x), Math.round(destination_y), width, height);
+
+  };
+
   // Zeichnet ein Großes Rechteck als Hintergrund um die Spuren zu löschen
   fill(color) {
     this.buffer.fillStyle = color;
@@ -44,7 +49,8 @@ class Display{
 
     }
 
-    this.context.imageSmoothingEnabled = false;
+    this.context.imageSmoothingEnabled = true;
+    this.context.imageSmoothingQuality = 'high';
 
   };
 

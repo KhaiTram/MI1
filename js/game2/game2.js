@@ -1,9 +1,33 @@
 //Author: Khai Tram
 
+//Welt Konstanten
+const INIT_GRAVITY_VALUE = 3;
+const INIT_FRICTION_VALUE = 0.9;
+const GAME_WORLD_HEIGHT = 1080;
+const GAME_WORLD_WIDTH = 1920;
+
+//Spieler Konstanten
+const PLAYER_IMAGE_URL = "pictures/Ninja.png";
+const PLAYER_IMAGE_COLS = 9;
+const PLAYER_START_X = 10;
+const PLAYER_START_Y = 50;
+const PLAYER_HEIGHT = 224;
+const PLAYER_WIDTH = 120;
+
+//Virus Konstanten
+const VIRUS_IMAGE_URL = "pictures/game3/Corona.png";
+const VIRUS_IMAGE_COLS = 1;
+const VIRUS_HEIGHT = 100;
+const VIRUS_WIDTH = 100;
+const INITIAL_VIRUS_VELOCITY = 2;
+const INITIAL_SPAWN_DELAY = 100;
+
+
+
 class Game {
 
     constructor() {
-        this.world = new World();
+        this.world = new World(INIT_GRAVITY_VALUE, INIT_FRICTION_VALUE, GAME_WORLD_HEIGHT, GAME_WORLD_WIDTH);
     }
 
     update() {
@@ -13,82 +37,202 @@ class Game {
 };
 
 class World {
-    constructor() {
-        this.background_color = "rgba(40,48,56,0.25)";
-        this.friction = 0.9;
-        this.gravity = 3;
+    constructor(gravity, friction, height, width) {
+        this.background_color = "black";
+        this.friction = friction;
+        this.gravity = gravity;
 
-        this.player = new Player();
+        this.viruses = [];
+        this.player = new Player(PLAYER_IMAGE_URL, PLAYER_HEIGHT, PLAYER_WIDTH);
 
-        this.height = 72;
-        this.width = 128;
+        this.height = height;
+        this.width = width;
+
+        this.spawnDelay=INITIAL_SPAWN_DELAY;
+        this.loopcounter=0;
+        this.virusSpeed=INITIAL_VIRUS_VELOCITY;
 
     }
 
     collideObject(object) {
 
-        if (object.x < 0) { object.x = 0; object.velocity_x = 0; }
-        else if (object.x + object.width > this.width) { object.x = this.width - object.width; object.velocity_x = 0; }
-        if (object.y < 0) { object.y = 0; object.velocity_y = 0; }
-        else if (object.y + object.height > this.height) { object.jumping = false; object.y = this.height - object.height; object.velocity_y = 0; }
+        if (object.x < 0) { object.x = 0; object.velocityX = 0; }
+        else if (object.x + object.width > this.width) { object.x = this.width - object.width; object.velocityX = 0; }
+        if (object.y < 0) { object.y = 0; object.velocityY = 0; }
+        else if (object.y + object.height > this.height) { object.jumping = false; object.y = this.height - object.height; object.velocityY = 0; }
 
+    }
+
+    spawnVirus() {
+        this.loopcounter++ 
+        if (this.loopcounter%this.spawnDelay == 0  ){
+            this.viruses.push(new Virus(VIRUS_IMAGE_URL,VIRUS_HEIGHT,VIRUS_WIDTH))
+        }
     }
 
     update() {
 
-        this.player.velocity_y += this.gravity;
-        this.player.update();
 
-        this.player.velocity_x *= this.friction;
-        this.player.velocity_y *= this.friction;
+        this.player.velocityY += this.gravity;
+        this.player.updatePos();
+        this.player.updateAn();
+        this.player.velocityX *= this.friction;
+        this.player.velocityY *= this.friction;
 
         this.collideObject(this.player);
 
+        this.spawnVirus();
+
+        this.viruses.forEach((virus) => {
+            virus.updatePos();
+            this.collideObject(virus);
+        }
+        )
+
     }
+
+
+
 }
 
-class Player {
-    constructor() {
-        this.color = "#ff0000";
-        this.height = 16;
+class GameObject {
+    constructor(spriteSheet, height, width) {
+        this.spriteSheet = getImg(spriteSheet);
+        this.height = height;
+        this.width = width;
+        this.velocityX = 0;
+        this.velocityY = 0;
+    }
+
+}
+
+class Player extends GameObject {
+
+    constructor(spriteSheet, height, width) {
+        super(spriteSheet, height, width);
         this.jumping = true;
-        this.velocity_x = 0;
-        this.velocity_y = 0;
-        this.width = 16;
-        this.x = 100;
-        this.y = 50;
+        this.direction = -1;
+        this.x = PLAYER_START_X;
+        this.y = PLAYER_START_Y;
+        /* frameSets = {
+            "idle": [4],
+            "jump-left": [3],
+            "move-left": [2,3],
+            "jump-right": [5],
+            "move-right": [5,6]
+        } */
     }
 
     jump() {
         if (!this.jumping) {
 
-            this.color = "#" + Math.floor(Math.random() * 16777216).toString(16);
-            if (this.color.length != 7) {
-
-                this.color = this.color.slice(0, 1) + "0" + this.color.slice(1, 6);
-
-            }
-
             this.jumping = true;
-            this.velocity_y -= 20;
+            this.velocityY -= 50;
 
         }
     }
 
     moveLeft() {
-        this.velocity_x -= 0.5;
+        this.velocityX -= 3;
+        this.direction = -1;
     }
     moveRight() {
-        this.velocity_x += 0.5;
+        this.velocityX += 3;
+        this.direction = 1;
     }
 
-    update() {
+    updatePos() {
 
-        this.x += this.velocity_x;
-        this.y += this.velocity_y;
+        this.x += this.velocityX;
+        this.y += this.velocityY;
+
+    }
+
+    updateAn() {
 
     }
 
 }
+
+class spriteSheet {
+    constructor() {
+
+    }
+}
+
+class Animator {
+    constructor(frameSet, Delay) {
+
+        this.count = 0;
+        this.delay = (delay >= 1) ? delay : 1;
+        this.frame_set = frame_set;
+        this.frame_index = 0;
+        this.frame_value = frame_set[0];
+        this.mode = "pause";
+
+    };
+
+    animate() {
+        switch (this.mode) {
+
+            case "loop": this.loop(); break;
+            case "pause": break;
+
+        }
+    };
+
+    changeFrameSet(frame_set, mode, delay = 10, frame_index = 0) {
+        if (this.frame_set === frame_set) { return; }
+
+        this.count = 0;
+        this.delay = delay;
+        this.frame_set = frame_set;
+        this.frame_index = frame_index;
+        this.frame_value = frame_set[frame_index];
+        this.mode = mode;
+
+    }
+
+    loop() {
+
+        this.count++;
+
+        while (this.count > this.delay) {
+
+            this.count -= this.delay;
+
+            this.frame_index = (this.frame_index < this.frame_set.length - 1) ? this.frame_index + 1 : 0;
+
+            this.frame_value = this.frame_set[this.frame_index];
+
+        }
+
+    }
+}
+
+class Virus extends GameObject {
+    constructor(spriteSheet, height, width, velocityY) {
+        super(spriteSheet, height, width);
+        this.velocityY = velocityY;
+        this.x=Math.floor(Math.random() * GAME_WORLD_WIDTH - 100);
+        this.y=0;
+    };
+
+    updatePos() {
+
+        this.y+=this.velocityY
+
+    }
+
+
+}
+
+
+function getImg(spriteSheetURL) {
+    let spriteSheet = new Image();
+    spriteSheet.src = spriteSheetURL;
+    return spriteSheet;
+}
+
 
 
