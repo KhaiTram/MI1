@@ -62,9 +62,7 @@ class Player {
     jump() {
         if (!this.jumping) {
 
-            this.color = "#" + Math.floor(Math.random() * 16777216).toString(16);// Change to random color
-            /* toString(16) will not add a leading 0 to a hex value, so this: #0fffff, for example,
-            isn't valid. toString would cut off the first 0. The code below inserts it. */
+            this.color = "#" + Math.floor(Math.random() * 16777216).toString(16);
             if (this.color.length != 7) {
 
                 this.color = this.color.slice(0, 1) + "0" + this.color.slice(1, 6);
