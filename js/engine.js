@@ -1,14 +1,14 @@
 // Author: Khai Tram
 
 
-/*
-param: 
-timeStep:Zeitabstand zwischen Updates
-update:update Funktion 
-render:render Funktion
-*/
 class Engine {
-
+    
+    /*
+    param: 
+    timeStep:Zeitabstand zwischen Updates
+    update:update Funktion 
+    render:render Funktion
+    */
     constructor(timeStep, update, render) {
 
         this.timeLastUpdate = 0;// Zeit die seit dem letzten Update vergangen ist
@@ -63,8 +63,7 @@ class Engine {
 
     }
 
-    //Arrow function wird genutzt
-
+    //Arrow function wird genutzt damit loop accesible ist
     handleLoop = (timeStamp) => {
         this.loop(timeStamp);
     }
