@@ -5,11 +5,11 @@ const INIT_GRAVITY_VALUE = 3;
 const INIT_FRICTION_VALUE = 0.9;
 const GAME_WORLD_HEIGHT = 1080;
 const GAME_WORLD_WIDTH = 1920;
-
+var GAME_END = false;
 //Spieler Konstanten
 const PLAYER_IMAGE_URL = "pictures/Ninja.png";
 const PLAYER_IMAGE_COLS = 9;
-const PLAYER_START_X = 20;
+const PLAYER_START_X = 0;
 const PLAYER_START_Y = 50;
 const PLAYER_HEIGHT = 224;
 const PLAYER_WIDTH = 120;
@@ -19,9 +19,9 @@ const VIRUS_IMAGE_URL = "pictures/game3/corona.png";
 const VIRUS_IMAGE_COLS = 1;
 const VIRUS_HEIGHT = 100;
 const VIRUS_WIDTH = 100;
-const VIRUS_START_X = 200;
+const VIRUS_START_X = 1900;
 const VIRUS_START_Y = 50;
-const INITIAL_VIRUS_VELOCITY = 0;
+const INITIAL_VIRUS_VELOCITY = -10;
 
 
 
@@ -50,6 +50,7 @@ class World {
         this.height = height;
         this.width = width;
 
+
      
        
         
@@ -67,8 +68,8 @@ class World {
 
     collideObjectFloor(object) {
 
-        if (object.x < -10) {
-            object.x = 150;
+        if (object.x < -100) {
+            object.x = this.width+20;
         }
         
         if (object.y < 0) {
@@ -82,7 +83,18 @@ class World {
 
     collideObjectObject(object1,object2) {
 
-      /*  if (object2.x >= 0 && object2.x <=10 && object1.y > 52) {
+       
+        if(object2.x > object1.width + object1.x || object1.x > object2.width + object2.x || object2.y > object1.height + object1.y || object1.y > object2.height + object2.y){
+            console.log("fALSE")
+
+        }
+        else {
+            console.log("TRUE")   
+            GAME_END = true
+            object2.velocityX = 0;
+        }
+        
+        /*if (object2.x >= 0 && object2.x <=120 && object1.y > 100) {
             console.log("Kollidiert!!!!")
             object2.velocityX = 0;
             
@@ -95,7 +107,9 @@ class World {
 
     update() {
 
-        this.collideObjectObject(this.player,this.virus);
+        if (!GAME_END){
+            this.collideObjectObject(this.player,this.virus);
+        }
 
         this.player.velocityY += this.gravity;
         this.player.updatePos();
@@ -109,10 +123,14 @@ class World {
         this.virus.velocityY += this.gravity;
         this.virus.updatePos();
 
-        this.collideObject(this.virus);
        
-       // this.collideObjectFloor(this.virus);
+       
+        this.collideObjectFloor(this.virus);
 
+       /* console.log(this.player.y + " Y");
+        console.log(this.player.x + " X");
+
+        console.log(this.virus.y + " Y Virus");*/
         }
         
 
@@ -154,7 +172,7 @@ class Player extends GameObject {
         if (!this.jumping) {
 
             this.jumping = true;
-            this.velocityY -= 50;
+            this.velocityY -= 100;
 
         }
     }
@@ -249,7 +267,9 @@ class Virus extends GameObject {
 
     updatePos() {
       
-       // this.velocityX -= 0.003;
+        if(!GAME_END) {
+            this.velocityX -= 0.003;
+        }
         this.x += this.velocityX;
         this.y += this.velocityY;
 

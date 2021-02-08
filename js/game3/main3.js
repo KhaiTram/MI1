@@ -23,9 +23,9 @@ window.addEventListener("load", function(event) {
     
     display.fill(game.world.background_color);
     //display.drawRectangle(game.world.player.x, game.world.player.y, game.world.player.width, game.world.player.height, "red");
-    //!display.drawObject(game.world.player.spriteSheet, 600, 0, game.world.player.x, game.world.player.y, game.world.player.width, game.world.player.height);
+    display.drawObject(game.world.player.spriteSheet, 600, 0, game.world.player.x, game.world.player.y, game.world.player.width, game.world.player.height);
     
-    display.drawObject(game.world.virus.spriteSheet,game.world.virus.x, game.world.virus.y);  
+    display.drawObject(game.world.virus.spriteSheet, 0, 0, game.world.virus.x, game.world.virus.y, game.world.virus.width, game.world.virus.height);  
       /* display.drawObject(assets_manager.tile_set_image,
         frame.x, frame.y,
         game.world.player.x + Math.floor(game.world.player.width * 0.5 - frame.width * 0.5) + frame.offset_x,
