@@ -9,17 +9,8 @@ class Display{
       this.context = canvas.getContext("2d");
   }
 
-  // Im Buffer wird hier das Rechteck gezeichnet
-  drawRectangle(x, y, width, height, color) {
-
-    this.buffer.fillStyle = color;
-    this.buffer.fillRect(Math.floor(x), Math.floor(y), width, height);
-
-  };
-
   drawObject(image, source_x, source_y, destination_x, destination_y, width, height) {
     this.buffer.drawImage(image, source_x, source_y, width, height, Math.round(destination_x), Math.round(destination_y), width, height);
-
   };
 
   // Zeichnet ein Großes Rechteck als Hintergrund um die Spuren zu löschen

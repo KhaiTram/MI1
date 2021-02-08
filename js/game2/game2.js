@@ -1,7 +1,7 @@
 //Author: Khai Tram
 
 //Welt Konstanten
-const INIT_GRAVITY_VALUE = 1;
+const INIT_GRAVITY_VALUE = 4;
 const INIT_FRICTION_VALUE = 0.9;
 const GAME_WORLD_HEIGHT = 1080;
 const GAME_WORLD_WIDTH = 1920;
@@ -13,14 +13,18 @@ const PLAYER_START_X = 10;
 const PLAYER_START_Y = 50;
 const PLAYER_HEIGHT = 224;
 const PLAYER_WIDTH = 120;
+const PLAYER_VELOCITY_X = 4;
+const PLAYER_JUMP = 50;
 
 //Virus Konstanten
 const VIRUS_IMAGE_URL = "pictures/game3/Corona.png";
 const VIRUS_IMAGE_COLS = 1;
 const VIRUS_HEIGHT = 100;
 const VIRUS_WIDTH = 100;
-const INITIAL_VIRUS_VELOCITY = 2;
-const INITIAL_SPAWN_DELAY = 100;
+const INITIAL_VIRUS_VELOCITY = 3;
+const VIRUS_VELOCITY_MULTIPLIER = 1.1;
+const INITIAL_SPAWN_DELAY = 50;
+
 
 
 
@@ -55,7 +59,6 @@ class World {
     }
 
     collideObject(object) {
-
         if (object.x < 0) { object.x = 0; object.velocityX = 0; }
         else if (object.x + object.width > this.width) { object.x = this.width - object.width; object.velocityX = 0; }
         if (object.y < 0) { object.y = 0; object.velocityY = 0; }
@@ -66,8 +69,12 @@ class World {
     spawnVirus() {
         this.loopcounter++ 
         if (this.loopcounter%this.spawnDelay == 0  ){
-            this.viruses.push(new Virus(VIRUS_IMAGE_URL,VIRUS_HEIGHT,VIRUS_WIDTH))
+            this.viruses.push(new Virus(VIRUS_IMAGE_URL,VIRUS_HEIGHT,VIRUS_WIDTH,this.virusSpeed))
+            this.virusSpeed *= VIRUS_VELOCITY_MULTIPLIER
+            console.log(this.viruses)
         }
+
+    
     }
 
     update() {
@@ -77,7 +84,6 @@ class World {
         this.player.updatePos();
         this.player.updateAn();
         this.player.velocityX *= this.friction;
-        this.player.velocityY *= this.friction;
 
         this.collideObject(this.player);
 
@@ -127,17 +133,17 @@ class Player extends GameObject {
         if (!this.jumping) {
 
             this.jumping = true;
-            this.velocityY -= 50;
+            this.velocityY -= PLAYER_JUMP;
 
         }
     }
 
     moveLeft() {
-        this.velocityX -= 3;
+        this.velocityX -= PLAYER_VELOCITY_X;
         this.direction = -1;
     }
     moveRight() {
-        this.velocityX += 3;
+        this.velocityX += PLAYER_VELOCITY_X;
         this.direction = 1;
     }
 

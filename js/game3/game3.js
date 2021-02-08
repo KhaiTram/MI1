@@ -44,7 +44,7 @@ class World {
         this.friction = friction;
         this.gravity = gravity;
 
-        this.virus = new Virus(VIRUS_IMAGE_URL,VIRUS_HEIGHT,VIRUS_WIDTH);
+        this.virus = new Virus(VIRUS_IMAGE_URL,VIRUS_HEIGHT,VIRUS_WIDTH,INITIAL_VIRUS_VELOCITY);
         this.player = new Player(PLAYER_IMAGE_URL, PLAYER_HEIGHT, PLAYER_WIDTH);
 
         this.height = height;
