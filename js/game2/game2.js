@@ -7,14 +7,15 @@ const GAME_WORLD_HEIGHT = 1080;
 const GAME_WORLD_WIDTH = 1920;
 
 //Spieler Konstanten
-const PLAYER_IMAGE_URL = "pictures/game/Spritesheet.png";
+const PLAYER_IMAGE_URL = "pictures/game/Player.png";
 const PLAYER_IMAGE_COLS = 9;
 const PLAYER_START_X = 10;
 const PLAYER_START_Y = 50;
 const PLAYER_HEIGHT = 250;
 const PLAYER_WIDTH = 130;
-const PLAYER_VELOCITY_X = 4;
+const PLAYER_VELOCITY_X = 2;
 const PLAYER_JUMP = 50;
+const ANIMATION_DELAY = 10;
 
 //Virus Konstanten
 const VIRUS_IMAGE_URL = "pictures/game/corona_pic.png";
@@ -22,8 +23,8 @@ const VIRUS_IMAGE_COLS = 1;
 const VIRUS_HEIGHT = 100;
 const VIRUS_WIDTH = 100;
 const INITIAL_VIRUS_VELOCITY = 3;
-const VIRUS_VELOCITY_MULTIPLIER = 1.1;
-const INITIAL_SPAWN_DELAY = 50;
+const VIRUS_VELOCITY_MULTIPLIER = 1;
+const INITIAL_SPAWN_DELAY = 150;
 
 
 
@@ -52,9 +53,9 @@ class World {
         this.height = height;
         this.width = width;
 
-        this.spawnDelay=INITIAL_SPAWN_DELAY;
-        this.loopcounter=0;
-        this.virusSpeed=INITIAL_VIRUS_VELOCITY;
+        this.spawnDelay = INITIAL_SPAWN_DELAY;
+        this.loopcounter = 0;
+        this.virusSpeed = INITIAL_VIRUS_VELOCITY;
 
     }
 
@@ -63,18 +64,16 @@ class World {
         else if (object.x + object.width > this.width) { object.x = this.width - object.width; object.velocityX = 0; }
         if (object.y < 0) { object.y = 0; object.velocityY = 0; }
         else if (object.y + object.height > this.height) { object.jumping = false; object.y = this.height - object.height; object.velocityY = 0; }
-
     }
 
     spawnVirus() {
-        this.loopcounter++ 
-        if (this.loopcounter%this.spawnDelay == 0  ){
-            this.viruses.push(new Virus(VIRUS_IMAGE_URL,VIRUS_HEIGHT,VIRUS_WIDTH,this.virusSpeed))
-            this.virusSpeed *= VIRUS_VELOCITY_MULTIPLIER
-            console.log(this.viruses)
+        this.loopcounter++
+        if (this.loopcounter % this.spawnDelay == 0) {
+            this.viruses.push(new Virus(VIRUS_IMAGE_URL, VIRUS_HEIGHT, VIRUS_WIDTH, this.virusSpeed))
+            this.virusSpeed += VIRUS_VELOCITY_MULTIPLIER
         }
 
-    
+
     }
 
     update() {
@@ -82,11 +81,8 @@ class World {
 
         this.player.velocityY += this.gravity;
         this.player.updatePos();
-        this.player.updateAn();
         this.player.velocityX *= this.friction;
-
         this.collideObject(this.player);
-
         this.spawnVirus();
 
         this.viruses.forEach((virus) => {
@@ -120,31 +116,45 @@ class Player extends GameObject {
         this.direction = -1;
         this.x = PLAYER_START_X;
         this.y = PLAYER_START_Y;
-        /* frameSets = {
-            "idle": [4],
-            "jump-left": [3],
-            "move-left": [2,3],
-            "jump-right": [5],
-            "move-right": [5,6]
-        } */
+        this.animationFrame = 8;
+        this.loopcounter = 0;
     }
+
+
 
     jump() {
         if (!this.jumping) {
 
             this.jumping = true;
             this.velocityY -= PLAYER_JUMP;
-
+            this.animationFrame = 8;
         }
     }
 
     moveLeft() {
+        this.loopcounter++;
         this.velocityX -= PLAYER_VELOCITY_X;
         this.direction = -1;
+
+        if (this.loopcounter % ANIMATION_DELAY == 0 && this.jumping == false) {
+            this.animationFrame++;
+            if (this.animationFrame >= 4) {
+                this.animationFrame = 0;
+            }
+        }
+
     }
     moveRight() {
+
         this.velocityX += PLAYER_VELOCITY_X;
         this.direction = 1;
+        this.loopcounter++;
+        if (this.loopcounter % ANIMATION_DELAY == 0 && this.jumping == false) {
+            this.animationFrame++;
+            if (this.animationFrame >= 8) {
+                this.animationFrame = 5;
+            }
+        }
     }
 
     updatePos() {
@@ -154,74 +164,21 @@ class Player extends GameObject {
 
     }
 
-    updateAn() {
-
-    }
-
 }
 
-class spriteSheet {
-    constructor() {
 
-    }
-}
-
-class Animator {
-    constructor(frameSet, Delay) {
-
-        this.count = 0;
-        this.delay = (delay >= 1) ? delay : 1;
-        this.frame_set = frame_set;
-        this.frame_index = 0;
-        this.frame_value = frame_set[0];
-        this.mode = "pause";
-
-    };
-
-    animate() {
-        switch (this.mode) {
-
-            case "loop": this.loop(); break;
-            case "pause": break;
-
-        }
-    };
-
-    changeFrameSet(frame_set, mode, delay = 10, frame_index = 0) {
-        if (this.frame_set === frame_set) { return; }
-
-        this.count = 0;
-        this.delay = delay;
-        this.frame_set = frame_set;
-        this.frame_index = frame_index;
-        this.frame_value = frame_set[frame_index];
-        this.mode = mode;
-
-    }
-
-    loop() {
-        this.count++;
-        while (this.count > this.delay) {
-            this.count -= this.delay;
-            this.frame_index = (this.frame_index < this.frame_set.length - 1) ? this.frame_index + 1 : 0;
-            this.frame_value = this.frame_set[this.frame_index];
-
-        }
-
-    }
-}
 
 class Virus extends GameObject {
     constructor(spriteSheet, height, width, velocityY) {
         super(spriteSheet, height, width);
         this.velocityY = velocityY;
-        this.x=Math.floor(Math.random() * GAME_WORLD_WIDTH - 100);
-        this.y=0;
+        this.x = Math.floor(Math.random() * GAME_WORLD_WIDTH - 100);
+        this.y = 0;
     };
 
     updatePos() {
 
-        this.y+=this.velocityY
+        this.y += this.velocityY
 
     }
 

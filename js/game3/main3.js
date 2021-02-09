@@ -23,7 +23,7 @@ window.addEventListener("load", function(event) {
     
     display.fill(game.world.bgImg);
     //display.drawRectangle(game.world.player.x, game.world.player.y, game.world.player.width, game.world.player.height, "red");
-    display.drawObject(game.world.player.spriteSheet, 600, 0, game.world.player.x, game.world.player.y, game.world.player.width, game.world.player.height);
+    display.drawObject(game.world.player.spriteSheet, game.world.player.animationFrame*game.world.player.width, 0, game.world.player.x, game.world.player.y, game.world.player.width, game.world.player.height);
     
     display.drawObject(game.world.virus.spriteSheet, 0, 0, game.world.virus.x, game.world.virus.y, game.world.virus.width, game.world.virus.height);  
       /* display.drawObject(assets_manager.tile_set_image,
@@ -38,6 +38,8 @@ window.addEventListener("load", function(event) {
     if (controller.left.active)  { game.world.player.moveLeft();  }
     if (controller.right.active) { game.world.player.moveRight(); }
     if (controller.up.active)    { game.world.player.jump(); controller.up.active = false; }
+    if (controller.left.down && !controller.left.blocked ) { game.world.player.animationFrame=0 ; controller.left.blocked=true; }
+    if (controller.right.down && !controller.left.blocked) { game.world.player.animationFrame=4; controller.left.blocked=true; }
     
     game.update();
    

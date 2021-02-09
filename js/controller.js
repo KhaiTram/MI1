@@ -16,28 +16,12 @@ class Controller {
 
     switch (key_code) {
 
-      case 37: this.left.getInput(down); break;
-      case 38: this.up.getInput(down); break;
-      case 39: this.right.getInput(down);
+      case 37: this.left.getInput(down,type); break;
+      case 38: this.up.getInput(down,type); break;
+      case 39: this.right.getInput(down,type);
 
     }
   }
-
-  readTextFile()
-  {
-    document.getElementById('inputfile') 
-    .addEventListener('change', function() { 
-      
-    var fr=new FileReader(); 
-    fr.onload=function(){ 
-        console.log(fr.result); 
-    } 
-      
-    fr.readAsText(this.files[0]); 
-}) 
-      
-  }
-
 
 }
 
@@ -45,14 +29,19 @@ class ButtonInput {
   constructor() {
 
     this.active = this.down = false;
+    this.blocked = false;
   }
 
 
   //Überprüft ob die Taste gedrückt ist und speichert entsprechend den Zustand
-  getInput(down) {
+  getInput(down,type) {
 
     if (this.down != down) this.active = down;
-    this.down = down;
+    this.down = down; 
+
+    if (type == "keyup"){
+      this.blocked= false;
+    }
 
   }
 }

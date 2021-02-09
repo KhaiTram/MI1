@@ -23,7 +23,7 @@ window.addEventListener("load", function (event) {
 
     display.fill(game.world.background_color);
     //display.drawRectangle(game.world.player.x, game.world.player.y, game.world.player.width, game.world.player.height, "red");
-    display.drawObject(game.world.player.spriteSheet, 393, 0, game.world.player.x, game.world.player.y, game.world.player.width, game.world.player.height);
+    display.drawObject(game.world.player.spriteSheet, game.world.player.animationFrame* game.world.player.width, 0, game.world.player.x, game.world.player.y, game.world.player.width, game.world.player.height);
 
     game.world.viruses.forEach((virus) => {
       display.drawObject(virus.spriteSheet, 0, 0, virus.x, virus.y, virus.width, virus.height);
@@ -42,6 +42,8 @@ window.addEventListener("load", function (event) {
     if (controller.left.active) { game.world.player.moveLeft(); }
     if (controller.right.active) { game.world.player.moveRight(); }
     if (controller.up.active) { game.world.player.jump(); controller.up.active = false; }
+    if (controller.left.down && !controller.left.blocked ) { game.world.player.animationFrame=0 ; controller.left.blocked=true; }
+    if (controller.right.down && !controller.left.blocked) { game.world.player.animationFrame=4; controller.left.blocked=true; }
 
     game.update();
 
