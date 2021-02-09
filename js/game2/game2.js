@@ -17,7 +17,7 @@ const PLAYER_VELOCITY_X = 4;
 const PLAYER_JUMP = 50;
 
 //Virus Konstanten
-const VIRUS_IMAGE_URL = "pictures/game3/Corona.png";
+const VIRUS_IMAGE_URL = "pictures/game3/corona_pic.png";
 const VIRUS_IMAGE_COLS = 1;
 const VIRUS_HEIGHT = 100;
 const VIRUS_WIDTH = 100;
