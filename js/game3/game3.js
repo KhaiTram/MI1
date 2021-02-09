@@ -110,23 +110,24 @@ class World {
 
         if (!GAME_END){
             this.collideObjectObject(this.player,this.virus);
-        }
+            this.player.velocityY += this.gravity;
+            this.player.updatePos();
+            this.player.updateAn();
+            this.player.velocityX *= this.friction;
+            this.player.velocityY *= this.friction;
 
-        this.player.velocityY += this.gravity;
-        this.player.updatePos();
-        this.player.updateAn();
-        this.player.velocityX *= this.friction;
-        this.player.velocityY *= this.friction;
+            this.collideObject(this.player);
 
-        this.collideObject(this.player);
+            
+            this.virus.velocityY += this.gravity;
+            this.virus.updatePos();
 
         
-        this.virus.velocityY += this.gravity;
-        this.virus.updatePos();
+        
+            this.collideObjectFloor(this.virus);
+        }
 
-       
-       
-        this.collideObjectFloor(this.virus);
+        
 
        /* console.log(this.player.y + " Y");
         console.log(this.player.x + " X");
