@@ -7,17 +7,17 @@ const GAME_WORLD_HEIGHT = 1080;
 const GAME_WORLD_WIDTH = 1920;
 
 //Spieler Konstanten
-const PLAYER_IMAGE_URL = "pictures/Ninja.png";
+const PLAYER_IMAGE_URL = "pictures/game/Spritesheet.png";
 const PLAYER_IMAGE_COLS = 9;
 const PLAYER_START_X = 10;
 const PLAYER_START_Y = 50;
-const PLAYER_HEIGHT = 224;
-const PLAYER_WIDTH = 120;
+const PLAYER_HEIGHT = 250;
+const PLAYER_WIDTH = 130;
 const PLAYER_VELOCITY_X = 4;
 const PLAYER_JUMP = 50;
 
 //Virus Konstanten
-const VIRUS_IMAGE_URL = "pictures/game3/corona_pic.png";
+const VIRUS_IMAGE_URL = "pictures/game/corona_pic.png";
 const VIRUS_IMAGE_COLS = 1;
 const VIRUS_HEIGHT = 100;
 const VIRUS_WIDTH = 100;

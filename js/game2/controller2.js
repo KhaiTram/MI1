@@ -23,22 +23,6 @@ class Controller {
     }
   }
 
-  readTextFile()
-  {
-    document.getElementById('inputfile') 
-    .addEventListener('change', function() { 
-      
-    var fr=new FileReader(); 
-    fr.onload=function(){ 
-        console.log(fr.result); 
-    } 
-      
-    fr.readAsText(this.files[0]); 
-}) 
-      
-  }
-
-
 }
 
 class ButtonInput {
