@@ -15,7 +15,7 @@ const PLAYER_HEIGHT = 224;
 const PLAYER_WIDTH = 120;
 
 //Virus Konstanten
-const VIRUS_IMAGE_URL = "pictures/game3/corona.png";
+const VIRUS_IMAGE_URL = "pictures/game3/corona_pic.png";
 const VIRUS_IMAGE_COLS = 1;
 const VIRUS_HEIGHT = 100;
 const VIRUS_WIDTH = 100;
@@ -40,7 +40,8 @@ class Game {
 
 class World {
     constructor(gravity, friction, height, width) {
-        this.background_color = "blue";
+        this.bgImg = getImg("pictures/game3/game3_bg.png");
+        //this.background_color = "blue";
         this.friction = friction;
         this.gravity = gravity;
 
@@ -172,7 +173,7 @@ class Player extends GameObject {
         if (!this.jumping) {
 
             this.jumping = true;
-            this.velocityY -= 100;
+            this.velocityY -= 60;
 
         }
     }
@@ -268,7 +269,7 @@ class Virus extends GameObject {
     updatePos() {
       
         if(!GAME_END) {
-            this.velocityX -= 0.003;
+            this.velocityX -= 0.03;
         }
         this.x += this.velocityX;
         this.y += this.velocityY;
