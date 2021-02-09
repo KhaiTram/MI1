@@ -1,137 +1,39 @@
-html {
-  scroll-behavior: smooth;
-}
-
-#test{
-  padding: 20%;
-}
-
 body {
-  background-color: black;
-  color:white;
-  font-family: Avenir Black;
-}
-
-#gameScreen {
-  border: 1px solid white;
-}
-
-.title {
-  margin-top: 2%;
-  margin-left: 5%;
-  font-size: 5vw;
-}
-
-.wireframe{
-  padding: 10%;
-}
-
-.libraries{
-  margin: 15%;
-  font-size: 3.0vw;
-  text-align: center;
-  color:white
-}    
-
-.buttons{
-    margin: 15%;
-    font-size: 3.0vw;
-    text-align: center;
-    color:white
-}
-
-.blockquote-footer{
-  font-size: 1.5vw;
-}
-
-.mainTitle{
-  font-size: 4.5vw;
-  margin-top: 5%;
-  margin-left: 5%;
-}
-.skillsTitle{
-  text-align: center;
-  font-size: 3vw;
-  margin-top: 2%;
-}
-
-.skillsText{
-  font-size: 1.5vw;
-  margin-top: 2%;
-  text-align: center;
-}
-
-.subTitle{
-  font-size: 3.5vw;
-  margin-top: 5%;
-  margin-left: 5%;
-}
-
-.subTitle2{
-  font-size: 3.5vw;
-  margin-top: 5%;
-  margin-right: 5%;
-  text-align: right;
-}
-
-.subSubTitle{
-  font-size: 2.5vw;
-  margin-top: 5%;
-  margin-left: 5%;
-}
-
-.text{
-  font-size: 1.5vw;
-  margin-top: 2%;
-  margin-left: 5%;
-  margin-right: 5%;
-  text-align: justify;
-}
-
-.text2{
-  font-size: 1.5vw;
-  margin-top: 10%;
-  margin-left: 5%;
-  margin-right: 5%;
-  text-align: justify;
-}
-
-  #top{
-    margin-top: 20px;
-  }
-
-  #leicht{
-    padding-top: 5%;
-  }
-
-  .flex-row-reverse{
-    padding-right: 7%;
-    padding-top: 5%;
-  }
-
-
-  ul {
-    list-style-type: none;
+    height: 100%;
     margin: 0;
-    padding: 0;
-    overflow: hidden;
-  }
-  
-  li {
-    float: left;
-  }
-  
-  li a {
-    display: block;
-    color: white;
-    font-size: 1.5vw;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-  }
-  
-  li a:hover {
-    filter: brightness(200%);
-  }
+    background-color: #9fddf9;
+    font-family: ibmFont;
+ }
+ 
+ .fluid-container{
+    background-image: url("../pictures/bg/bg.png");
+    background-repeat: repeat;
+    background-size: 100%;
+    background-attachment: scroll;
+ }
+
+ .cardholder{
+    padding:10%;
+ }
 
  
+
+@font-face {
+    font-family: ibmFont;
+    src: url(../fonts/IBM_Plex_Sans/IBMPlexSans-Bold.ttf);
+  }
+  
+  @font-face {
+    font-family: ibmFont;
+    src: url(../fonts/IBM_Plex_Sans/IBMPlexSans-Bold.ttf);
+    font-weight: bold;
+  }
+
+ .navButton{
+     transition-duration:.3s;
+    }
+
+.navButton:hover
+    {
+    transform:scale(1.1);
+    }

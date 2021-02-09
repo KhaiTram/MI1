@@ -1,43 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <title>Portfolio </title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="css/news.css">
+<head>
+    <title>News </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/news.css">
 
+</head>
 
+<body>
 
-    </head>
-
-    <body>
-        <div class="title">Pet Me</div>
-        <div class="navbar">
-            <a class="navitem" href="home.html"><img src ="pictures/navbar/home.png" alt="Home" width="100%" height="100%"></a>
-            <a class="navitem" href="news.html"><img src ="pictures/navbar/news.png" alt="news" width="100%" height="100%"></a>
-            <a class="navitem" href="game.html"><img src ="pictures/navbar/game.png" alt="game" width="100%" height="100%"></a>
-            <a class="navitem" href="galery.html"><img src ="pictures/navbar/galery.png" alt="galery" width="100%" height="100%"></a>
-            <a class="navitem" href="merch.html"><img src ="pictures/navbar/merch.png" alt="merch" width="100%" height="100%"></a> 
-            <a class="navitem" href="info.html"><img src ="pictures/navbar/info.png" alt="Info" width="100%" height="100%"></a>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <a href="home.html"><img class="navButton" src="pictures/navbar/home.png" alt="Home" width="100%"
+                        height="100%"></a>
+            </div>
+            <div class="col">
+                <a href="news.html"><img class="navButton" src="pictures/navbar/news.png" alt="news" width="100%"
+                        height="100%"></a>
+            </div>
+            <div class="col">
+                <a href="game.html"><img class="navButton" src="pictures/navbar/game.png" alt="game" width="100%"
+                        height="100%"></a>
+            </div>
+            <div class="col">
+                <a href="galery.html"><img class="navButton" src="pictures/navbar/galery.png" alt="galery" width="100%"
+                        height="100%"></a>
+            </div>
+            <div class="col">
+                <a href="merch.html"><img class="navButton" src="pictures/navbar/merch.png" alt="merch" width="100%"
+                        height="100%"></a>
+            </div>
+            <div class="col">
+                <a href="info.html"><img class="navButton" src="pictures/navbar/info.png" alt="info" width="100%"
+                        height="100%"></a>
+            </div>
         </div>
-  
-        <h1 class="newsCard">Hier wirst du auf den den neuesten Stand der Skins und News gebracht</h1>
-         Aktuelles über Corona:
+    </div>
 
-
-
-         Verschöner dein Haustier:
-        <div>
-            <img src="pictures/E.png" alt="Huch, upsi. Etwas ist schief gelaufen." width="40%" height="333">  
-            <div>
-
-                <img src="pictures/Ninja.png" alt="Huch, upsi. Etwas ist schief gelaufen." width="40%" height="333">    
-                <p><a class="penis" href="merch.html">Ich will zum Merch!!!</a></p>
-            </div>  
-
+    <div class="fluid-container">
+        <div class="cardholder">
+            <div class="card text-center">
+                <div class="card-header">
+                    Tagesschau
+                </div> 
+                <div class="card-body">
+                    <h5 class="card-title">Lockdown Verlängerung mit Perspektive</h5>
+                    <p class="card-text">Vor Bund und Länder Treffen.</p>
+                    <a target="_blank" href="https://www.tagesschau.de/inland/innenpolitik/bund-laender-lockdown-verlaengerung-103.html" class="btn btn-secondary newsButton">Mehr...</a>
+                </div>
+                <div class="card-footer text-muted">
+                    2 days ago
+                </div>
+            </div>
+            <div class="card text-center">
+                <div class="card-header">
+                    Featured
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Special title treatment</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+                <div class="card-footer text-muted">
+                    2 days ago
+                </div>
+            </div>
         </div>
 
-    </body>
+    </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+
+</body>
+
 
 </html>
