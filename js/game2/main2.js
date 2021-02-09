@@ -23,7 +23,7 @@ window.addEventListener("load", function (event) {
 
     display.fill(game.world.background_color);
     //display.drawRectangle(game.world.player.x, game.world.player.y, game.world.player.width, game.world.player.height, "red");
-    display.drawObject(game.world.player.spriteSheet, 600, 0, game.world.player.x, game.world.player.y, game.world.player.width, game.world.player.height);
+    display.drawObject(game.world.player.spriteSheet, 393, 0, game.world.player.x, game.world.player.y, game.world.player.width, game.world.player.height);
 
     game.world.viruses.forEach((virus) => {
       display.drawObject(virus.spriteSheet, 0, 0, virus.x, virus.y, virus.width, virus.height);
@@ -44,7 +44,6 @@ window.addEventListener("load", function (event) {
     if (controller.up.active) { game.world.player.jump(); controller.up.active = false; }
 
     game.update();
-    controller.readTextFile("data.txt");
 
   };
 
