@@ -21,10 +21,13 @@ class Display{
     this.buffer.drawImage(image, source_x, source_y, width, height, Math.round(destination_x), Math.round(destination_y), width, height);
   };
 
-  // Zeichnet ein Großes Rechteck als Hintergrund um die Spuren zu löschen
-  fill(color) {
-    this.buffer.fillStyle = color;
-    this.buffer.fillRect(0, 0, this.buffer.canvas.width, this.buffer.canvas.height);
+  // Zeichnet ein Bild als Hintergrund um die Spuren zu löschen
+  fill(bgImg) {
+    var pat = this.context.createPattern(bgImg,"no-repeat");
+    this.buffer.rect(0,0,1920,1080);
+    this.buffer.fillStyle = pat;
+    this.buffer.fill();
+    //this.buffer.fillRect(0, 0, this.buffer.canvas.width, this.buffer.canvas.height);
 
   };
 

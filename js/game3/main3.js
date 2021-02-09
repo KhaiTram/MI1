@@ -21,7 +21,7 @@ window.addEventListener("load", function(event) {
   
   var render = function() {
     
-    display.fill(game.world.background_color);
+    display.fill(game.world.bgImg);
     //display.drawRectangle(game.world.player.x, game.world.player.y, game.world.player.width, game.world.player.height, "red");
     display.drawObject(game.world.player.spriteSheet, 600, 0, game.world.player.x, game.world.player.y, game.world.player.width, game.world.player.height);
     
@@ -40,7 +40,7 @@ window.addEventListener("load", function(event) {
     if (controller.up.active)    { game.world.player.jump(); controller.up.active = false; }
     
     game.update();
-    controller.readTextFile("data.txt");
+   
 
   };
 
