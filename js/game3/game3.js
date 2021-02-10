@@ -6,6 +6,7 @@ const INIT_FRICTION_VALUE = 0.9;
 const GAME_WORLD_HEIGHT = 1080;
 const GAME_WORLD_WIDTH = 1920;
 var GAME_END = false;
+var timer = 0;
 //Spieler Konstanten
 const PLAYER_IMAGE_URL = "pictures/game/Player.png";
 const PLAYER_IMAGE_COLS = 9;
@@ -16,6 +17,8 @@ const PLAYER_WIDTH = 130;
 const PLAYER_VELOCITY_X = 2;
 const PLAYER_JUMP = 50;
 const ANIMATION_DELAY = 10;
+var happiness = 0;
+var health = 100;
 
 //Virus Konstanten
 const VIRUS_IMAGE_URL = "pictures/game/corona_pic.png";
@@ -25,7 +28,7 @@ const VIRUS_WIDTH = 100;
 const VIRUS_START_X = 1900;
 const VIRUS_START_Y = 50;
 const INITIAL_VIRUS_VELOCITY = -10;
-
+var virusHit = 0;
 
 
 
@@ -68,6 +71,7 @@ class World {
 
         if (object.x < -100) {
             object.x = this.width+20;
+
         }
         
         if (object.y < 0) {
@@ -87,11 +91,20 @@ class World {
 
         }
         else {
-            console.log("TRUE")   
-            GAME_END = true
-            object2.velocityX = 0;
-        }
-        
+            console.log("TRUE") 
+            virusHit++;
+            health -= 30;
+            happiness -= 5;
+            if(virusHit != 3 ){   
+                this.virus.x = this.width+20;
+            }
+                
+            if(virusHit == 3){
+                
+                GAME_END = true
+                
+            
+            }
         /*if (object2.x >= 0 && object2.x <=120 && object1.y > 100) {
             console.log("Kollidiert!!!!")
             object2.velocityX = 0;
@@ -100,10 +113,20 @@ class World {
         
        
 
+        }
     }
 
 
     update() {
+    timer++;
+
+        if (timer == 1800) {
+            GAME_END = true;    
+        }
+    
+        if(timer % 100 == 0 && !GAME_END) {
+            happiness += 2.5;
+        }
 
         if (!GAME_END){
             this.collideObjectObject(this.player,this.virus);
@@ -120,13 +143,13 @@ class World {
             this.collideObjectFloor(this.virus);
         }
 
-        
-
-       /* console.log(this.player.y + " Y");
-        console.log(this.player.x + " X");
-
-        console.log(this.virus.y + " Y Virus");*/
-        }
+        console.log(happiness + " happy ");
+        console.log(health + " health");
+        console.log (virusHit);
+      
+       
+    
+    }
         
 
     }
