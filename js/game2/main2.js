@@ -1,35 +1,29 @@
 //author Khai
 
-window.addEventListener("keydown", function(e) {
-  // space and arrow keys
-  if([32, 37, 38, 39, 40].indexOf(e.code) > -1) {
-      e.preventDefault();
-  }
-}, false);
-
-
 
 window.addEventListener("load", function (event) {
 
-  document.getElementById("game1").onclick = function() {startEngine()};
+  document.getElementById("game1Button").onclick = function() {startEngine()};
 
   let health = document.getElementById("health");
   let hunger = document.getElementById("hunger");
   let hygiene = document.getElementById("hygiene");
   let happiness = document.getElementById("happiness");
 
-  let healthValue = 0;
-  let hungerValue = 100;
+  let healthValue = 100;
+  let hungerValue = 0;
   let hygieneValue = 0;
   let happinessValue = 0;
+  let canvas2 = document.getElementById("canvas2");
 
   health.style.width= healthValue+ '%';
   hunger.style.width= hungerValue+'%';
   hygiene.style.width= hygieneValue+'%';
-  happiness.style.width= happiness+'%';
+  happiness.style.width= happinessValue+'%';
   
 
   function startEngine(){
+    canvas2.style.visibility = "visible";
     engine.start();
    }
    
@@ -83,22 +77,25 @@ window.addEventListener("load", function (event) {
 
   var update = function () {
 
+    if (game.world.stop) {canvas2.style.visibility = "hidden";};
+
+    health.style.width= game.world.player.health+'%';
+    hunger.style.width= game.world.player.hunger+'%';
+    hygiene.style.width= game.world.player.hygiene+'%';
+    happiness.style.width= game.world.player.happiness+'%';
     if (controller.left.active) { game.world.player.moveLeft(); }
     if (controller.right.active) { game.world.player.moveRight(); }
     if (controller.up.active) { game.world.player.jump(); controller.up.active = false; }
     if (controller.left.down && !controller.left.blocked ) { game.world.player.animationFrame=0 ; controller.left.blocked=true; }
     if (controller.right.down && !controller.left.blocked) { game.world.player.animationFrame=4; controller.left.blocked=true; }
-
-    if (game.world.stop) {engine.stop()};
-    
     game.update();
   };
 
 
 
   var controller = new Controller();
-  var display = new Display(document.querySelector("canvas"));
-  var game = new Game(healtValue,hungerValue,hygieneValue,happinessValue);
+  var display = new Display(canvas2);
+  var game = new Game(healthValue,hungerValue,hygieneValue,happinessValue);
   var engine = new Engine(1000 / 30, render, update);
 
 

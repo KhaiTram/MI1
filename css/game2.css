@@ -41,7 +41,7 @@ body {
 
 canvas { 
   image-rendering:pixelated; 
-
+  visibility: hidden;
 }
 
 

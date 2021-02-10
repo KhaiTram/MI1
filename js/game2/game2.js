@@ -30,6 +30,7 @@ const VIRUS_WIDTH = 100;
 const INITIAL_VIRUS_VELOCITY = 4;
 const VIRUS_VELOCITY_MULTIPLIER = 0.5;
 const INITIAL_SPAWN_DELAY = 100;
+const DAMAGE = 10;
 var soundHit;
 
 //Food Konstanten
@@ -42,6 +43,7 @@ const SWEET_WIDTH = 206;
 const INITIAL_FOODS_VELOCITY = 3;
 const FOOD_VELOCITY_MULTIPLIER = 0.5;
 const INITIAL_OBJECTSPAWN_DELAY = 50;
+const FOODVALUE = 5;
 
 //Papier Konstanten
 const PAPER_IMAGE_URL = "pictures/game/paper.png";
@@ -49,6 +51,7 @@ const PAPER_HEIGHT = 143;
 const PAPER_WIDTH = 150;
 const INITIAL_PAPER_VELOCITY = 3;
 const PAPER_VELOCITY_MULTIPLIER = 0.5;
+const CLEAN = 5;
 
 
 
@@ -151,7 +154,7 @@ class World {
 
     update() {
         this.gameDuration++;
-        if (this.gameDuration == 1800){ this.stop=true;};
+        if (this.gameDuration == 100){ this.stop=true;};
         if (!this.stop){
 
             this.player.velocityY += this.gravity;
@@ -163,7 +166,7 @@ class World {
             this.sushis.forEach((sushi) => {
                 sushi.updatePos();
                 this.collideObject(this.player,sushi,(player,paper)=>{
-                    player.hunger++;
+                    player.hunger += FOODVALUE;
                     paper.y=1200;
                     soundEat.play();
                 });
@@ -172,7 +175,7 @@ class World {
             this.sweets.forEach((sweet) => {
                 sweet.updatePos();
                 this.collideObject(this.player,sweet,(player,sweet)=>{
-                    player.hunger++;
+                    player.hunger += (FOODVALUE/2);
                     sweet.y=1200;
                     soundEat.play();
                 });
@@ -182,7 +185,7 @@ class World {
                 
                 virus.updatePos();
                 this.collideObject(this.player,virus,(player,virus)=>{
-                    player.health-=3;
+                    player.health-= DAMAGE;
                     virus.y=1200;
                     soundHit.play()});
             })
@@ -190,7 +193,7 @@ class World {
             this.papers.forEach((paper) => {
                 paper.updatePos();
                 this.collideObject(this.player,paper,(player,paper)=>{
-                    player.hygiene++;
+                    player.hygiene+= CLEAN;
                     paper.y=1200;
                     soundYay.play();
                 });
