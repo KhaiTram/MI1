@@ -1,4 +1,4 @@
-//Author: Khai Tram
+//Author: Robert Nor
 
 //Welt Konstanten
 const INIT_GRAVITY_VALUE = 3;
@@ -19,7 +19,7 @@ const PLAYER_VELOCITY_X = 2;
 const PLAYER_JUMP = 50;
 const ANIMATION_DELAY = 10;
 var soundJump;
-
+var soundWalk;
 var happiness = 0;
 var health = 100;
 
@@ -60,10 +60,11 @@ class World {
         this.height = height;
         this.width = width;
 
+        soundWalk = new sound("sounds/sound_walk.mp3")
         soundHit = new sound("sounds/sound_oh.mp3");
         soundJump = new sound("sounds/sound_jump.mp3");
         soundWindblow = new sound("sounds/sound_windblow.mp3");
-
+        
     }
 
     collideObject(object) {
@@ -109,7 +110,7 @@ class World {
             }
                 
             if(virusHit == 3){
-                
+                soundWindblow.stop();
                 GAME_END = true
                 
             
@@ -127,11 +128,11 @@ class World {
 
 
     update() {
-    timer++;
-        
+        timer++;
+           
         if (timer == 1800) {
             GAME_END = true;  
-            soundWindblow.play();  
+             
         }
     
         if(timer % 100 == 0 && !GAME_END) {
@@ -139,6 +140,7 @@ class World {
         }
 
         if (!GAME_END){
+            soundWindblow.play(); 
             this.collideObjectObject(this.player,this.virus);
             this.player.velocityY += this.gravity;
             this.player.updatePos();
@@ -208,6 +210,7 @@ class Player extends GameObject {
 
         if (this.loopcounter % ANIMATION_DELAY == 0 && this.jumping == false) {
             this.animationFrame++;
+            soundWalk.play();
             if (this.animationFrame >= 4) {
                 this.animationFrame = 0;
             }
@@ -221,6 +224,7 @@ class Player extends GameObject {
         this.loopcounter++;
         if (this.loopcounter % ANIMATION_DELAY == 0 && this.jumping == false) {
             this.animationFrame++;
+            soundWalk.play();
             if (this.animationFrame >= 8) {
                 this.animationFrame = 5;
             }
@@ -270,6 +274,18 @@ function sound(src) {
     this.sound.src = src;
     this.play = function(){
     this.sound.play();
+
+    this.stop = function(){
+        this.sound.pause();
+      }
+}
+function disableKeyScroll(){
+    window.addEventListener("keydown", function(e) {
+    // space and arrow keys
+    if([32, 37, 38, 39, 40].indexOf(e.code) > -1) {
+        e.preventDefault();
+    }
+}, false);
 
 }
 
