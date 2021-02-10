@@ -79,6 +79,5 @@ class Engine {
     stop() {
         window.cancelAnimationFrame(this.requestAnimationFrame);
     }
-
 };
 
