@@ -17,6 +17,7 @@ const PLAYER_WIDTH = 130;
 const PLAYER_VELOCITY_X = 20;
 const PLAYER_JUMP = 50;
 const ANIMATION_DELAY = 10;
+var soundWalk;
 var soundJump;
 var soundYay;
 var soundEat;
@@ -91,6 +92,7 @@ class World {
         this.stop=false;
         this.gameDuration= 0;
 
+        soundWalk = new sound("sounds/sound_walk.mp3")
         soundJump = new sound("sounds/sound_jump.mp3")
         soundYay = new sound("sounds/sound_yay.mp3")
         soundEat = new sound("sounds/sound_ham.mp3")
@@ -241,25 +243,33 @@ class Player extends GameObject {
     }
 
     moveLeft() {
+      
         this.loopcounter++;
+        
         this.velocityX -= PLAYER_VELOCITY_X;
         this.direction = -1;
-
+       
         if (this.loopcounter % ANIMATION_DELAY == 0 && this.jumping == false) {
             this.animationFrame++;
+            soundWalk.play();
             if (this.animationFrame >= 4) {
+
                 this.animationFrame = 0;
             }
         }
     }
 
     moveRight() {
+       
         this.velocityX += PLAYER_VELOCITY_X;
         this.direction = 1;
         this.loopcounter++;
+       
         if (this.loopcounter % ANIMATION_DELAY == 0 && this.jumping == false) {
             this.animationFrame++;
+            soundWalk.play();
             if (this.animationFrame >= 8) {
+
                 this.animationFrame = 5;
             }
         }
