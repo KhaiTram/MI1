@@ -39,7 +39,7 @@ const SWEET_WIDTH = 206;
 const INITIAL_FOODS_VELOCITY = 3;
 const FOOD_VELOCITY_MULTIPLIER = 0.5;
 const INITIAL_OBJECTSPAWN_DELAY = 50;
-const FOODVALUE = 5;
+const FOODVALUE = 8;
 
 //Papier Konstanten
 const PAPER_IMAGE_URL = "pictures/game/paper.png";
@@ -47,7 +47,7 @@ const PAPER_HEIGHT = 143;
 const PAPER_WIDTH = 150;
 const INITIAL_PAPER_VELOCITY = 3;
 const PAPER_VELOCITY_MULTIPLIER = 0.5;
-const CLEAN = 5;
+const CLEAN = 8;
 
 
 

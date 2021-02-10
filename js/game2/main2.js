@@ -150,7 +150,7 @@ window.addEventListener("load", function (event) {
   };
 
   var update = function () {
-    if (GAME_END){canvas1.remove();game2Button.style.visibility = "visible";};
+    if (GAME_END){canvas1.remove();game2Button.style.visibility = "visible"; soundWindblow.stop};
     healthValue = game.world.player.health;
     hungerValue = game.world.player.hunger;
     hygieneValue = game.world.player.hygiene;

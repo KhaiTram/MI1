@@ -95,11 +95,11 @@ class World {
 
         if (timer == 1800) {
             GAME_END = true;
-
+            this.soundWindblow.stop();
         }
 
         if (timer % 100 == 0 && !GAME_END) {
-            this.player.happiness += 2.5;
+            this.player.happiness += 6;
         }
 
         if (!GAME_END) {
