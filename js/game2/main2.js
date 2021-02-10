@@ -36,7 +36,7 @@ window.addEventListener("load", function (event) {
   let hygiene = document.getElementById("hygiene");
   let happiness = document.getElementById("happiness");
 
-  document.createElement("canvas1")
+  
 
   let healthValue = 100;
   let hungerValue = 0;
@@ -55,7 +55,11 @@ window.addEventListener("load", function (event) {
 
 
   function startEngine() {
-    canvas1= document.createElement("canvas")
+    game1Button = document.getElementById("game1Button")
+    game1Button.remove();
+    canvas1= document.createElement("CANVAS")
+    document.body.appendChild(canvas1);
+    
     display = new Display(canvas1);
     display.buffer.canvas.height = game.world.height;
     display.buffer.canvas.width = game.world.width
@@ -66,7 +70,11 @@ window.addEventListener("load", function (event) {
 
 
   function startEngine2() {
-    canvas2.style.visibility = "visible";
+    game2Button = document.getElementById("game2Button")
+    game2Button.remove();
+    canvas2= document.createElement("CANVAS")
+    document.body.appendChild(canvas2);
+
     engine.stop();
     controller = new Controller();
     display2 = new Display2(canvas2);
@@ -78,6 +86,7 @@ window.addEventListener("load", function (event) {
     resize();
     display2.buffer.canvas.height = game2.world.height;
     display2.buffer.canvas.width = game2.world.width;
+
   }
 
 
@@ -141,7 +150,7 @@ window.addEventListener("load", function (event) {
   };
 
   var update = function () {
-    if (GAME_END){canvas1.style.visibility = "hidden";};
+    if (GAME_END){canvas1.remove();game2Button.style.visibility = "visible";};
     healthValue = game.world.player.health;
     hungerValue = game.world.player.hunger;
     hygieneValue = game.world.player.hygiene;
@@ -159,12 +168,13 @@ window.addEventListener("load", function (event) {
 
     game.update();
 
+    
 
   };
 
   var update2 = function () {
     if (engine2Active) {
-      if (game2.world.stop) { canvas2.style.visibility = "hidden"; };
+      if (game2.world.stop) { canvas2.remove();createStats();};
       healthValue = game2.world.player.health;
       hungerValue = game2.world.player.hunger;
       hygieneValue = game2.world.player.hygiene;
@@ -198,5 +208,106 @@ window.addEventListener("load", function (event) {
   window.addEventListener("resize", resize);
 
 
+  function createStats(){ 
+ 
+    var score = ((healthValue*2) + (hygieneValue*1.5) + hungerValue + happinessValue);
+    
+      if( score >= 550) {
+      
+          var statsText = document.getElementById("stats");
+          statsText.innerText =( "SEHR GUT" + 
+          "\n" + 
+          "\n" + 
+          "Du hast Dein Me erfolgreich durch die Pandemie gebracht und es hat kein Risiko krank zu werden!") 
+    
+          var statsBg = document.getElementById("statscard");
+          statsBg.style.backgroundColor ="green";
+          statsText.style.backgroundColor ="green";
+          
+     
+      }
+      
+      if( score >= 500 && score < 550) {
+      
+      var statsText = document.getElementById("stats");
+      statsText.innerText =( "GUT" +
+      "\n" + 
+      "\n" + 
+      "Du hast Dein Me gut durch die Pandemie gebracht und es hat nur ein geringes Risiko krank zu werden! Das schaffst Du bestimmt noch besser!") 
+    
+    
+      var statsBg = document.getElementById("statscard");
+      statsBg.style.backgroundColor ="lightgreen";
+      statsText.style.backgroundColor ="lightgreen";
+      
+    
+    }
+    
+    if( score >= 450 && score < 500) {
+      
+      var statsText = document.getElementById("stats");
+      statsText.innerText =( "Mittelmäßig" +
+      "\n" + 
+      "\n" + 
+      "Du hast Dein Me mittelmäßig durch die Pandemie gebracht und es hat ein hohes Risiko krank zu werden! Versuch lieber mehr auf seine Gesundheit zu achten!") 
+    
+      var statsBg = document.getElementById("statscard");
+      statsBg.style.backgroundColor ="yellow";
+      statsText.style.backgroundColor ="yellow";
+      
+    
+    }
+    
+    if( score >= 350 && score < 450) {
+      
+      var statsText = document.getElementById("stats");
+      statsText.innerText =( "Schlecht" + 
+      "\n" + 
+      "\n" + 
+      "Du hast Dein Me schlecht durch die Pandemie gebracht und es hat ein sehr hohes Risiko krank zu werden! Achte bitte mehr auf seine Gesundheit!") 
+    
+      var statsBg = document.getElementById("statscard");
+      statsBg.style.backgroundColor ="darkorange";
+      statsText.style.backgroundColor ="darkorange";
+    
+    
+      
+    
+    }
+    
+    if( score < 350) {
+      
+      var statsText = document.getElementById("stats");
+      statsText.innerText =( "Sehr Schlecht" +
+       "\n" + 
+       "\n" + 
+      "Oh nein! Du hast Dein Me sehr schlecht durch die Pandemie gebracht. Es hat sich mit dem Corona-Virus" +
+      " infiziert und ist nun sehr krank! Versuch bitte mehr auf seine Gesundheit und Hygiene zu achten." +
+      "Hat es genug gegessen?") 
+    
+      var statsBg = document.getElementById("statscard");
+      statsBg.style.backgroundColor ="red";
+      statsText.style.backgroundColor ="red";
+    
+      
+      statsBg.style.color ="white";
+      statsText.style.color ="white";
+      
+      
+    
+    }
+     
+    var cardholderStats = document.getElementById("cardholderStats");
+    cardholderStats.style.visibility='visible';
+     
+    var playAgainButton = document.getElementById("playAgainButton");
+    playAgainButton.style.visibility='visible'; 
+     
+     
+    
+    
+    }
+    
 
 });
+

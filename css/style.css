@@ -51,3 +51,44 @@ body {
 .banner{
   margin-bottom: 2.5%;  
 }
+
+#game2Button{
+  visibility: hidden;  
+}
+#cardholderStats {
+  visibility: hidden;
+}
+#playAgainButton{
+text-align: center;
+width: 100%;
+
+}
+.buttonGame {
+	margin-top: 5%;
+  background:linear-gradient(to bottom, #79bbff 5%, #378de5 100%);
+	background-color:#79bbff;
+	border-radius:20px;
+	border:1px solid #337bc4;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:17px;
+	font-weight:bold;
+	padding:22px 76px;
+	text-decoration:none;
+}
+.buttonGame:hover {
+	background:linear-gradient(to bottom, #378de5 5%, #79bbff 100%);
+	background-color:#378de5;
+}
+.buttonGame:active {
+	position:relative;
+	top:1px;
+}
+.progress{
+  font-size: 1rem; 
+}
+.progress-bar{
+  color:black;
+}
