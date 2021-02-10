@@ -2,7 +2,8 @@ body {
     height: 100%;
     margin: 0;
     background-color: #9BE0FF;
-    font-family: ibmFont;
+    font-family: 'ibmFont';
+   /* font-weight: bold; */
  }
  
  .fluid-container{
@@ -20,12 +21,21 @@ body {
 
 @font-face {
     font-family: ibmFont;
-    src: url(../fonts/IBM_Plex_Sans/IBMPlexSans-Bold.ttf);
+
+    src: url('../fonts/IBM_Plex_Sans/Regular/IBMPlexSans-Regular.eot') format('embedded-opentype'),
+      url('../fonts/IBM_Plex_Sans/Regular/IBMPlexSans-Regular.eot'),
+     url('../fonts/IBM_Plex_Sans/Regular/IBMPlexSans-Regular.woff') format('woff'), 
+     url('../fonts/IBM_Plex_Sans/Regular/IBMPlexSans-Regular.ttf')  format('truetype'),
+     url('../IBM_Plex_Sans/Regular/IBMPlexSans-Regular.Bold') format('svg');
   }
   
   @font-face {
     font-family: ibmFont;
-    src: url(../fonts/IBM_Plex_Sans/IBMPlexSans-Bold.ttf);
+    src: url('../fonts/IBM_Plex_Sans/Bold/IBMPlexSans-Bold.eot') format('embedded-opentype'),
+      url('../fonts/IBM_Plex_Sans/Bold/IBMPlexSans-Bold.eot'),
+     url('../fonts/IBM_Plex_Sans/Bold/IBMPlexSans-Bold.woff') format('woff'), 
+     url('../fonts/IBM_Plex_Sans/Bold/IBMPlexSans-Bold.ttf')  format('truetype'),
+     url('../IBM_Plex_Sans/Regular/Bold/IBMPlexSans-Bold.Bold') format('svg');
     font-weight: bold;
   }
 

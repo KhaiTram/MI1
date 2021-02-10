@@ -9,15 +9,13 @@ class Display{
       this.context = canvas.getContext("2d");
   }
 
+  drawBg(image){
+    this.buffer.drawImage(image,0,0);
+  }
+
+
   drawObject(image, source_x, source_y, destination_x, destination_y, width, height) {
     this.buffer.drawImage(image, source_x, source_y, width, height, Math.round(destination_x), Math.round(destination_y), width, height);
-  };
-
-  // Zeichnet ein Großes Rechteck als Hintergrund um die Spuren zu löschen
-  fill(color) {
-    this.buffer.fillStyle = color;
-    this.buffer.fillRect(0, 0, this.buffer.canvas.width, this.buffer.canvas.height);
-
   };
 
   //Zeichnet den gebufferten Canvas auf den Hauptcanvas

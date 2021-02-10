@@ -12,28 +12,35 @@ window.addEventListener("load", function (event) {
 
   };
 
-  var resize = function (event) {
+  var resize = ()=> {
 
-    display.resize(document.documentElement.clientWidth - 32, document.documentElement.clientHeight - 32, game.world.height / game.world.width);
+    display.resize(document.documentElement.clientWidth - 100, document.documentElement.clientHeight - 200, game.world.height / game.world.width);
     display.render();
 
   };
 
   var render = function () {
 
-    display.fill(game.world.background_color);
-    //display.drawRectangle(game.world.player.x, game.world.player.y, game.world.player.width, game.world.player.height, "red");
+    display.drawBg(game.world.background)
+
     display.drawObject(game.world.player.spriteSheet, game.world.player.animationFrame* game.world.player.width, 0, game.world.player.x, game.world.player.y, game.world.player.width, game.world.player.height);
 
     game.world.viruses.forEach((virus) => {
       display.drawObject(virus.spriteSheet, 0, 0, virus.x, virus.y, virus.width, virus.height);
-    }
-    )
+    })
 
-    /* display.drawObject(assets_manager.tile_set_image,
-      frame.x, frame.y,
-      game.world.player.x + Math.floor(game.world.player.width * 0.5 - frame.width * 0.5) + frame.offset_x,
-      game.world.player.y + frame.offset_y, frame.width, frame.height); */
+    game.world.sushis.forEach((sushi) => {
+      display.drawObject(sushi.spriteSheet, 0, 0, sushi.x, sushi.y, sushi.width, sushi.height);
+    })
+
+    game.world.sweets.forEach((sweet) => {
+      display.drawObject(sweet.spriteSheet, 0, 0, sweet.x, sweet.y, sweet.width, sweet.height);
+    })
+
+    game.world.papers.forEach((paper) => {
+      display.drawObject(paper.spriteSheet, 0, 0, paper.x, paper.y, paper.width, paper.height);
+    })
+  
     display.render();
   };
 
