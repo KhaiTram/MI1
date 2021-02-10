@@ -53,7 +53,6 @@ window.addEventListener("load", function (event) {
     if (controller.right.down && !controller.left.blocked) { game.world.player.animationFrame=4; controller.left.blocked=true; }
 
     game.update();
-
   };
 
 

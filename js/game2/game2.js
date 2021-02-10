@@ -29,18 +29,18 @@ const INITIAL_SPAWN_DELAY = 100;
 //Food Konstanten
 const SUSHI_IMAGE_URL = "pictures/game/sushi.png";
 const SWEET_IMAGE_URL = "pictures/game/sweet.png";
-const SUSHI_HEIGHT = 108;
-const SUSHI_WIDTH = 200;
-const SWEET_HEIGHT = 74;
-const SWEET_WIDTH = 150;
+const SUSHI_HEIGHT = 128;
+const SUSHI_WIDTH = 238;
+const SWEET_HEIGHT = 112;
+const SWEET_WIDTH = 206;
 const INITIAL_FOODS_VELOCITY = 3;
 const FOOD_VELOCITY_MULTIPLIER = 0.5;
 const INITIAL_OBJECTSPAWN_DELAY = 50;
 
 //Papier Konstanten
 const PAPER_IMAGE_URL = "pictures/game/paper.png";
-const PAPER_HEIGHT = 150;
-const PAPER_WIDTH = 160;
+const PAPER_HEIGHT = 143;
+const PAPER_WIDTH = 150;
 const INITIAL_PAPER_VELOCITY = 3;
 const PAPER_VELOCITY_MULTIPLIER = 0.5;
 
@@ -82,6 +82,9 @@ class World {
         this.virusSpeed = INITIAL_VIRUS_VELOCITY;
         this.foodSpeed = INITIAL_FOODS_VELOCITY;
         this.paperSpeed = INITIAL_PAPER_VELOCITY;
+
+
+        this.gameDuration= 0;
     }
 
     collidePlayer(object) {
@@ -93,12 +96,12 @@ class World {
 
     collideObject(player, object, callback) {
 
-        if(object.x > player.width + player.x || player.x > player.width + object.x || object.y > player.height + player.y || player.y > object.height + object.y){
+        if(object.x > player.width + player.x || player.x > object.width + object.x || object.y > player.height + player.y || player.y > object.height + object.y){
             
         }
         else {
-            console.log("yay")
-            callback(object);
+            callback(player,object);
+            console.log(""+player.health+" "+ player.hunger +" " + player.hygiene )
         }
     }
 
@@ -132,6 +135,8 @@ class World {
 
 
     update() {
+        this.gameDuration++;
+        if (this.gameDuration < 1800){
         this.player.velocityY += this.gravity;
         this.player.updatePlayerPos();
         this.player.velocityX *= this.friction;
@@ -140,23 +145,25 @@ class World {
 
         this.sushis.forEach((sushi) => {
             sushi.updatePos();
-            this.collideObject(this.player,sushi,(paper)=>{paper.y=1200;});
+            this.collideObject(this.player,sushi,(player,paper)=>{player.hunger++;paper.y=1200;});
         })
 
         this.sweets.forEach((sweet) => {
             sweet.updatePos();
-            this.collideObject(this.player,sweet,(sweet)=>{sweet.y=1200;});
+            this.collideObject(this.player,sweet,(player,sweet)=>{player.hunger++;sweet.y=1200;});
         })
 
         this.viruses.forEach((virus) => {
             virus.updatePos();
-            this.collideObject(this.player,virus,(virus)=>{virus.y=1200;});
+            this.collideObject(this.player,virus,(player,virus)=>{player.health-=3;virus.y=1200;});
         })
 
         this.papers.forEach((paper) => {
             paper.updatePos();
-            this.collideObject(this.player,paper,(paper)=>{paper.y=1200;});
+            this.collideObject(this.player,paper,(player,paper)=>{player.hygiene++;paper.y=1200;});
         })
+            
+        };
     }
 }
 
@@ -167,7 +174,7 @@ class GameObject {
         this.width = width;
         this.velocityX = 0;
         this.velocityY = velocityY;
-        this.x = Math.floor(Math.random() * GAME_WORLD_WIDTH - 250);
+        this.x = Math.floor(Math.random() * (GAME_WORLD_WIDTH - 250));
         this.y = 0;
     }
     updatePos() {
@@ -189,6 +196,7 @@ class Player extends GameObject {
         this.health = 100;
         this.happiness = 50;
         this.hunger = 10;
+        this.hygiene = 10;
     }
 
     jump() {
@@ -211,7 +219,6 @@ class Player extends GameObject {
                 this.animationFrame = 0;
             }
         }
-
     }
 
     moveRight() {
