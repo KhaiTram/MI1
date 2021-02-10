@@ -7,6 +7,7 @@ const GAME_WORLD_HEIGHT = 1080;
 const GAME_WORLD_WIDTH = 1920;
 var GAME_END = false;
 var timer = 0;
+var soundWindblow;
 //Spieler Konstanten
 const PLAYER_IMAGE_URL = "pictures/game/Player.png";
 const PLAYER_IMAGE_COLS = 9;
@@ -18,6 +19,7 @@ const PLAYER_VELOCITY_X = 2;
 const PLAYER_JUMP = 50;
 const ANIMATION_DELAY = 10;
 var soundJump;
+
 var happiness = 0;
 var health = 100;
 
@@ -60,6 +62,7 @@ class World {
 
         soundHit = new sound("sounds/sound_oh.mp3");
         soundJump = new sound("sounds/sound_jump.mp3");
+        soundWindblow = new sound("sounds/sound_windblow.mp3");
 
     }
 
@@ -125,9 +128,10 @@ class World {
 
     update() {
     timer++;
-
+        
         if (timer == 1800) {
-            GAME_END = true;    
+            GAME_END = true;  
+            soundWindblow.play();  
         }
     
         if(timer % 100 == 0 && !GAME_END) {
@@ -197,6 +201,7 @@ class Player extends GameObject {
     }
 
     moveLeft() {
+        
         this.loopcounter++;
         this.velocityX -= PLAYER_VELOCITY_X;
         this.direction = -1;
@@ -210,7 +215,7 @@ class Player extends GameObject {
 
     }
     moveRight() {
-
+        
         this.velocityX += PLAYER_VELOCITY_X;
         this.direction = 1;
         this.loopcounter++;

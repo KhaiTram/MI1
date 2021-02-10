@@ -6,7 +6,7 @@ body {
 
   align-content:center;
   align-items:space-around;
-  background-color:#9BE0FF;
+  background-image: url("../pictures/bg/side_bg.png");
   display:grid;
   justify-items:center;
   height:100%;
