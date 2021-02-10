@@ -63,7 +63,7 @@ class World {
         soundHit = new sound("sounds/sound_oh.mp3");
         soundJump = new sound("sounds/sound_jump.mp3");
         soundWindblow = new sound("sounds/sound_windblow.mp3");
-
+        
     }
 
     collideObject(object) {
@@ -109,7 +109,7 @@ class World {
             }
                 
             if(virusHit == 3){
-                
+                soundWindblow.stop();
                 GAME_END = true
                 
             
@@ -127,11 +127,11 @@ class World {
 
 
     update() {
-    timer++;
-        
+        timer++;
+           
         if (timer == 1800) {
             GAME_END = true;  
-            soundWindblow.play();  
+             
         }
     
         if(timer % 100 == 0 && !GAME_END) {
@@ -139,6 +139,7 @@ class World {
         }
 
         if (!GAME_END){
+            soundWindblow.play(); 
             this.collideObjectObject(this.player,this.virus);
             this.player.velocityY += this.gravity;
             this.player.updatePos();
@@ -271,6 +272,9 @@ function sound(src) {
     this.play = function(){
     this.sound.play();
 
+    this.stop = function(){
+        this.sound.pause();
+      }
 }
 
 }
