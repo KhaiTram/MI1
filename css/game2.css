@@ -39,9 +39,6 @@ body {
   font-weight: bold;
 }
 
-canvas { 
-  image-rendering:pixelated; 
-  visibility: hidden;
-}
+
 
 

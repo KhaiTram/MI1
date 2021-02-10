@@ -6,6 +6,7 @@ const INIT_FRICTION_VALUE = 0.1;
 const GAME_WORLD_BG = "pictures/game/game2Bg.png";
 const GAME_WORLD_HEIGHT = 1080;
 const GAME_WORLD_WIDTH = 1920;
+const GAME_DURATION =1800;
 
 //Spieler Konstanten
 const PLAYER_IMAGE_URL = "pictures/game/Player.png";
@@ -17,10 +18,6 @@ const PLAYER_WIDTH = 130;
 const PLAYER_VELOCITY_X = 20;
 const PLAYER_JUMP = 50;
 const ANIMATION_DELAY = 10;
-var soundWalk;
-var soundJump;
-var soundYay;
-var soundEat;
 
 
 //Virus Konstanten
@@ -31,7 +28,6 @@ const INITIAL_VIRUS_VELOCITY = 4;
 const VIRUS_VELOCITY_MULTIPLIER = 0.5;
 const INITIAL_SPAWN_DELAY = 100;
 const DAMAGE = 10;
-var soundHit;
 
 //Food Konstanten
 const SUSHI_IMAGE_URL = "pictures/game/sushi.png";
@@ -58,10 +54,10 @@ const CLEAN = 5;
 
 
 
-class Game {
+class Game2 {
 
     constructor(health,hunger,hygiene,happiness) {
-        this.world = new World(INIT_GRAVITY_VALUE, INIT_FRICTION_VALUE, GAME_WORLD_HEIGHT, GAME_WORLD_WIDTH,health,hunger,hygiene,happiness);
+        this.world = new World2(INIT_GRAVITY_VALUE, INIT_FRICTION_VALUE, GAME_WORLD_HEIGHT, GAME_WORLD_WIDTH,health,hunger,hygiene,happiness);
     }
 
     update() {
@@ -69,7 +65,7 @@ class Game {
     }
 };
 
-class World {
+class World2 {
     constructor(gravity, friction, height, width,health,hunger,hygiene,happiness) {
         this.background_color = "black";
         this.friction = friction;
@@ -95,11 +91,11 @@ class World {
         this.stop=false;
         this.gameDuration= 0;
 
-        soundWalk = new sound("sounds/sound_walk.mp3")
-        soundJump = new sound("sounds/sound_jump.mp3")
-        soundYay = new sound("sounds/sound_yay.mp3")
-        soundEat = new sound("sounds/sound_ham.mp3")
-        soundHit = new sound("sounds/sound_corona_hit.mp3")
+        
+        
+        this.soundYay = new Sound("sounds/sound_yay.mp3");
+        this.soundEat = new Sound("sounds/sound_ham.mp3");
+        this.soundHit = new Sound("sounds/sound_corona_hit.mp3");
 
 
 
@@ -119,7 +115,7 @@ class World {
         }
         else {
             callback(player,object);
-            console.log(""+player.health+" "+ player.hunger +" " + player.hygiene )
+           
         }
     }
 
@@ -131,7 +127,7 @@ class World {
             this.spawnRandomObject(Math.floor(Math.random() * 100));
         }
         if (this.loopcounter % this.virusSpawnDelay == 0) {
-            this.viruses.push(new Virus(VIRUS_IMAGE_URL, VIRUS_HEIGHT, VIRUS_WIDTH, this.virusSpeed))
+            this.viruses.push(new Virus2(VIRUS_IMAGE_URL, VIRUS_HEIGHT, VIRUS_WIDTH, this.virusSpeed))
             this.virusSpeed += VIRUS_VELOCITY_MULTIPLIER;
         }
     }
@@ -154,7 +150,7 @@ class World {
 
     update() {
         this.gameDuration++;
-        if (this.gameDuration == 100){ this.stop=true;};
+        if (this.gameDuration == GAME_DURATION){ this.stop=true;};
         if (!this.stop){
 
             this.player.velocityY += this.gravity;
@@ -166,18 +162,18 @@ class World {
             this.sushis.forEach((sushi) => {
                 sushi.updatePos();
                 this.collideObject(this.player,sushi,(player,paper)=>{
-                    player.hunger += FOODVALUE;
+                    this.player.hunger += FOODVALUE;
                     paper.y=1200;
-                    soundEat.play();
+                    this.soundEat.play();
                 });
             })
             
             this.sweets.forEach((sweet) => {
                 sweet.updatePos();
                 this.collideObject(this.player,sweet,(player,sweet)=>{
-                    player.hunger += (FOODVALUE/2);
+                    this.player.hunger += (FOODVALUE/2);
                     sweet.y=1200;
-                    soundEat.play();
+                    this.soundEat.play();
                 });
             })
             
@@ -187,7 +183,7 @@ class World {
                 this.collideObject(this.player,virus,(player,virus)=>{
                     player.health-= DAMAGE;
                     virus.y=1200;
-                    soundHit.play()});
+                    this.soundHit.play()});
             })
             
             this.papers.forEach((paper) => {
@@ -195,7 +191,7 @@ class World {
                 this.collideObject(this.player,paper,(player,paper)=>{
                     player.hygiene+= CLEAN;
                     paper.y=1200;
-                    soundYay.play();
+                    this.soundYay.play();
                 });
             })
         }
@@ -204,7 +200,7 @@ class World {
     }
 }
 
-class GameObject {
+class GameObject2 {
     constructor(spriteSheet, height, width, velocityY) {
         this.spriteSheet = getImg(spriteSheet);
         this.height = height;
@@ -220,7 +216,7 @@ class GameObject {
 
 }
 
-class Player extends GameObject {
+class Player extends GameObject2 {
 
     constructor(spriteSheet, height, width,health,hunger,hygiene,happiness) {
         super(spriteSheet, height, width, 0);
@@ -234,11 +230,13 @@ class Player extends GameObject {
         this.happiness = happiness;
         this.hunger = hunger;
         this.hygiene = hygiene;
+        this.soundJump = new Sound("sounds/sound_jump.mp3");
+        this.soundWalk =new Sound("sounds/sound_walk.mp3");
     }
 
     jump() {
         if (!this.jumping) {
-            soundJump.play();
+            this.soundJump.play();
             this.jumping = true;
             this.velocityY -= PLAYER_JUMP;
             this.animationFrame = 8;
@@ -246,15 +244,16 @@ class Player extends GameObject {
     }
 
     moveLeft() {
-      
         this.loopcounter++;
         
         this.velocityX -= PLAYER_VELOCITY_X;
         this.direction = -1;
-       
+        
+       ;
         if (this.loopcounter % ANIMATION_DELAY == 0 && this.jumping == false) {
             this.animationFrame++;
-            soundWalk.play();
+            this.soundWalk.play();
+            
             if (this.animationFrame >= 4) {
 
                 this.animationFrame = 0;
@@ -263,14 +262,13 @@ class Player extends GameObject {
     }
 
     moveRight() {
-       
         this.velocityX += PLAYER_VELOCITY_X;
         this.direction = 1;
         this.loopcounter++;
        
         if (this.loopcounter % ANIMATION_DELAY == 0 && this.jumping == false) {
             this.animationFrame++;
-            soundWalk.play();
+            this.soundWalk.play();
             if (this.animationFrame >= 8) {
 
                 this.animationFrame = 5;
@@ -287,25 +285,25 @@ class Player extends GameObject {
 
 
 
-class Virus extends GameObject {
+class Virus2 extends GameObject2 {
     constructor(spriteSheet, height, width, velocityY) {
         super(spriteSheet, height, width, velocityY);
     };
 }
 
-class Paper extends GameObject {
+class Paper extends GameObject2 {
     constructor(spriteSheet, height, width, velocityY) {
         super(spriteSheet, height, width, velocityY);
     };
 }
 
-class Sushi extends GameObject {
+class Sushi extends GameObject2 {
     constructor(spriteSheet, height, width, velocityY) {
         super(spriteSheet, height, width, velocityY);
     };
 }
 
-class Sweet extends GameObject {
+class Sweet extends GameObject2 {
     constructor(spriteSheet, height, width, velocityY) {
         super(spriteSheet, height, width, velocityY);
     };
@@ -319,40 +317,18 @@ function getImg(imageURL) {
     return img;
 }
 
-function sound(src) {
-    this.sound = document.createElement("audio");
-    this.sound.src = src;
-    this.play = function(){
-    this.sound.play();
 
-    this.stop = function(){
-        this.sound.pause();
-      }
-}
-
-}
-
-/*  Author: almaceleste :"Disable arrow key scrolling in users browser" 
-    https://stackoverflow.com/questions/8916620/disable-arrow-key-scrolling-in-users-browser/8916697 
-    Zugriff am 09.02.2021
-*/
-// Deaktiviert das Scrollen auf der Website mit den Pfeiltasten 
-window.addEventListener('keydown', (e) => {
-    if (e.target.localName != 'input') {   // if you need to filter <input> elements
-        switch (e.keyCode) {
-            case 37: // left
-            case 39: // right
-                e.preventDefault();
-                break;
-            case 38: // up
-            case 40: // down
-                e.preventDefault();
-                break;
-            default:
-                break;
-        }
+class Sound {
+    constructor(src){
+            this.sound = document.createElement("audio");
+            
+            this.sound.src = src;
     }
-}, {
-    capture: true,   // this disables arrow key scrolling in modern Chrome
-    passive: false   // this is optional, my code works without it
-});
+
+    play(){
+    this.sound.play();
+    }
+    stop(){
+    this.sound.pause();
+    }
+}

@@ -1,6 +1,6 @@
 //Author: Khai
 
-class Display{ 
+class Display2{ 
   
   constructor(canvas){
       // Buffer Canvas wird erstellt

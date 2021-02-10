@@ -1,35 +1,85 @@
 //author Khai
 
+/*  Author: almaceleste :"Disable arrow key scrolling in users browser" 
+    https://stackoverflow.com/questions/8916620/disable-arrow-key-scrolling-in-users-browser/8916697 
+    Zugriff am 09.02.2021
+*/
+// Deaktiviert das Scrollen auf der Website mit den Pfeiltasten 
+window.addEventListener('keydown', (e) => {
+  if (e.target.localName != 'input') {   // if you need to filter <input> elements
+    switch (e.keyCode) {
+      case 37: // left
+      case 39: // right
+        e.preventDefault();
+        break;
+      case 38: // up
+      case 40: // down
+        e.preventDefault();
+        break;
+      default:
+        break;
+    }
+  }
+}, {
+  capture: true,   // this disables arrow key scrolling in modern Chrome
+  passive: false   // this is optional, my code works without it
+});
 
 window.addEventListener("load", function (event) {
 
-  document.getElementById("game1Button").onclick = function() {startEngine()};
+
+  document.getElementById("game1Button").onclick = function () { startEngine() };
+  document.getElementById("game2Button").onclick = function () { startEngine2() };
 
   let health = document.getElementById("health");
   let hunger = document.getElementById("hunger");
   let hygiene = document.getElementById("hygiene");
   let happiness = document.getElementById("happiness");
 
+  document.createElement("canvas1")
+
   let healthValue = 100;
   let hungerValue = 0;
   let hygieneValue = 0;
   let happinessValue = 0;
+  let canvas1 = document.getElementById("canvas1");
   let canvas2 = document.getElementById("canvas2");
 
-  health.style.width= healthValue+ '%';
-  hunger.style.width= hungerValue+'%';
-  hygiene.style.width= hygieneValue+'%';
-  happiness.style.width= happinessValue+'%';
-  
+  let engineActive=false;
+  let engine2Active = false;
 
-  function startEngine(){
-    canvas2.style.visibility = "visible";
+  health.style.width = healthValue + '%';
+  hunger.style.width = hungerValue + '%';
+  hygiene.style.width = hygieneValue + '%';
+  happiness.style.width = happinessValue + '%';
+
+
+  function startEngine() {
+    canvas1= document.createElement("canvas")
+    display = new Display(canvas1);
+    display.buffer.canvas.height = game.world.height;
+    display.buffer.canvas.width = game.world.width
+    engineActive=true;
+    resize();
     engine.start();
-   }
-   
-   function stopEngine(){
+  }
+
+
+  function startEngine2() {
+    canvas2.style.visibility = "visible";
     engine.stop();
-   }
+    controller = new Controller();
+    display2 = new Display2(canvas2);
+    console.log(healthValue+"" +hungerValue+""+ hygieneValue+""+ happinessValue)
+    game2 = new Game2(healthValue, hungerValue, hygieneValue, happinessValue);
+    engine2 = new Engine(1000 / 30, render2, update2);
+    engine2.start();
+    engine2Active = true;
+    resize();
+    display2.buffer.canvas.height = game2.world.height;
+    display2.buffer.canvas.width = game2.world.width;
+  }
+
 
 
   "use strict";
@@ -40,73 +90,113 @@ window.addEventListener("load", function (event) {
 
   };
 
-  
 
-  var resize = ()=> {
-
-    display.resize(document.documentElement.clientWidth - 100, document.documentElement.clientHeight - 200, game.world.height / game.world.width);
+  var resize = function (event) {
+    if (engineActive){
+    display.resize(document.documentElement.clientWidth - 100, document.documentElement.clientHeight - 100, game.world.height / game.world.width);
     display.render();
+    }
+    if (engine2Active) {
+      display2.resize(document.documentElement.clientWidth - 100, document.documentElement.clientHeight - 200, game2.world.height / game2.world.width);
+      display2.render();
+    }
 
   };
 
   var render = function () {
 
-    display.drawBg(game.world.background)
+    display.fill(game.world.bgImg);
 
-    display.drawObject(game.world.player.spriteSheet, game.world.player.animationFrame* game.world.player.width, 0, game.world.player.x, game.world.player.y, game.world.player.width, game.world.player.height);
+    display.drawObject(game.world.player.spriteSheet, game.world.player.animationFrame * game.world.player.width, 0, game.world.player.x, game.world.player.y, game.world.player.width, game.world.player.height);
 
-    game.world.viruses.forEach((virus) => {
-      display.drawObject(virus.spriteSheet, 0, 0, virus.x, virus.y, virus.width, virus.height);
-    })
+    display.drawObject(game.world.virus.spriteSheet, 0, 0, game.world.virus.x, game.world.virus.y, game.world.virus.width, game.world.virus.height);
 
-    game.world.sushis.forEach((sushi) => {
-      display.drawObject(sushi.spriteSheet, 0, 0, sushi.x, sushi.y, sushi.width, sushi.height);
-    })
-
-    game.world.sweets.forEach((sweet) => {
-      display.drawObject(sweet.spriteSheet, 0, 0, sweet.x, sweet.y, sweet.width, sweet.height);
-    })
-
-    game.world.papers.forEach((paper) => {
-      display.drawObject(paper.spriteSheet, 0, 0, paper.x, paper.y, paper.width, paper.height);
-    })
-  
     display.render();
+  };
 
+  var render2 = function () {
+    if (engine2Active) {
+      display2.drawBg(game2.world.background)
+
+      display2.drawObject(game2.world.player.spriteSheet, game2.world.player.animationFrame * game2.world.player.width, 0, game2.world.player.x, game2.world.player.y, game2.world.player.width, game2.world.player.height);
+
+      game2.world.viruses.forEach((virus) => {
+        display2.drawObject(virus.spriteSheet, 0, 0, virus.x, virus.y, virus.width, virus.height);
+      })
+
+      game2.world.sushis.forEach((sushi) => {
+        display2.drawObject(sushi.spriteSheet, 0, 0, sushi.x, sushi.y, sushi.width, sushi.height);
+      })
+
+      game2.world.sweets.forEach((sweet) => {
+        display2.drawObject(sweet.spriteSheet, 0, 0, sweet.x, sweet.y, sweet.width, sweet.height);
+      })
+
+      game2.world.papers.forEach((paper) => {
+        display2.drawObject(paper.spriteSheet, 0, 0, paper.x, paper.y, paper.width, paper.height);
+      })
+
+      display2.render();
+    }
   };
 
   var update = function () {
-
-    if (game.world.stop) {canvas2.style.visibility = "hidden";};
-
-    health.style.width= game.world.player.health+'%';
-    hunger.style.width= game.world.player.hunger+'%';
-    hygiene.style.width= game.world.player.hygiene+'%';
-    happiness.style.width= game.world.player.happiness+'%';
+    if (GAME_END){canvas1.style.visibility = "hidden";};
+    healthValue = game.world.player.health;
+    hungerValue = game.world.player.hunger;
+    hygieneValue = game.world.player.hygiene;
+    happinessValue = game.world.player.happiness;
+    health.style.width = game.world.player.health + '%';
+    hunger.style.width = game.world.player.hunger + '%';
+    hygiene.style.width = game.world.player.hygiene + '%';
+    happiness.style.width = game.world.player.happiness + '%';
     if (controller.left.active) { game.world.player.moveLeft(); }
     if (controller.right.active) { game.world.player.moveRight(); }
     if (controller.up.active) { game.world.player.jump(); controller.up.active = false; }
-    if (controller.left.down && !controller.left.blocked ) { game.world.player.animationFrame=0 ; controller.left.blocked=true; }
-    if (controller.right.down && !controller.left.blocked) { game.world.player.animationFrame=4; controller.left.blocked=true; }
+    if (controller.left.down && !controller.left.blocked) { game.world.player.animationFrame = 0; controller.left.blocked = true; }
+    if (controller.right.down && !controller.left.blocked) { game.world.player.animationFrame = 4; controller.left.blocked = true; }
+   
+
     game.update();
+
+
   };
 
+  var update2 = function () {
+    if (engine2Active) {
+      if (game2.world.stop) { canvas2.style.visibility = "hidden"; };
+      healthValue = game2.world.player.health;
+      hungerValue = game2.world.player.hunger;
+      hygieneValue = game2.world.player.hygiene;
+      happinessValue = game2.world.player.happiness;
+      health.style.width = game2.world.player.health + '%';
+      hunger.style.width = game2.world.player.hunger + '%';
+      hygiene.style.width = game2.world.player.hygiene + '%';
+      happiness.style.width = game2.world.player.happiness + '%';
+      if (controller.left.active) { game2.world.player.moveLeft(); }
+      if (controller.right.active) { game2.world.player.moveRight(); }
+      if (controller.up.active) { game2.world.player.jump(); controller.up.active = false; }
+      if (controller.left.down && !controller.left.blocked) { game2.world.player.animationFrame = 0; controller.left.blocked = true; }
+      if (controller.right.down && !controller.left.blocked) { game2.world.player.animationFrame = 4; controller.left.blocked = true; }
+      game2.update();
+    }
+  };
 
-
-  var controller = new Controller();
-  var display = new Display(canvas2);
-  var game = new Game(healthValue,hungerValue,hygieneValue,happinessValue);
+  var display;
+  var game = new Game(healthValue, hungerValue, hygieneValue, happinessValue);
   var engine = new Engine(1000 / 30, render, update);
+  var controller = new Controller();
+
+  var display2;
+  var game2;
+  var engine2;
 
 
-  display.buffer.canvas.height = game.world.height;
-  display.buffer.canvas.width = game.world.width;
 
   window.addEventListener("keydown", keyDownUp);
   window.addEventListener("keyup", keyDownUp);
   window.addEventListener("resize", resize);
 
-  resize();
 
 
 });
