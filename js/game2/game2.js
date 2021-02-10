@@ -332,8 +332,10 @@ function sound(src) {
 
 }
 
-// https://stackoverflow.com/questions/8916620/disable-arrow-key-scrolling-in-users-browser/8916697 Author: almaceleste
-
+/*  Author: almaceleste :"Disable arrow key scrolling in users browser" 
+    https://stackoverflow.com/questions/8916620/disable-arrow-key-scrolling-in-users-browser/8916697 
+    Zugriff am 09.02.2021
+*/
 // Deaktiviert das Scrollen auf der Website mit den Pfeiltasten 
 window.addEventListener('keydown', (e) => {
     if (e.target.localName != 'input') {   // if you need to filter <input> elements
