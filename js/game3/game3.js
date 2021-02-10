@@ -17,6 +17,7 @@ const PLAYER_WIDTH = 130;
 const PLAYER_VELOCITY_X = 2;
 const PLAYER_JUMP = 50;
 const ANIMATION_DELAY = 10;
+var soundJump;
 var happiness = 0;
 var health = 100;
 
@@ -29,7 +30,7 @@ const VIRUS_START_X = 1900;
 const VIRUS_START_Y = 50;
 const INITIAL_VIRUS_VELOCITY = -10;
 var virusHit = 0;
-
+var soundHit;
 
 
 class Game {
@@ -56,6 +57,10 @@ class World {
 
         this.height = height;
         this.width = width;
+
+        soundHit = new sound("sounds/sound_oh.mp3");
+        soundJump = new sound("sounds/sound_jump.mp3");
+
     }
 
     collideObject(object) {
@@ -91,6 +96,7 @@ class World {
 
         }
         else {
+            soundHit.play();
             console.log("TRUE") 
             virusHit++;
             health -= 30;
@@ -183,7 +189,7 @@ class Player extends GameObject {
 
     jump() {
         if (!this.jumping) {
-
+            soundJump.play();
             this.jumping = true;
             this.velocityY -= PLAYER_JUMP;
             this.animationFrame = 8;
@@ -254,5 +260,12 @@ function getImg(spriteSheetURL) {
     return spriteSheet;
 }
 
+function sound(src) {
+    this.sound = document.createElement("audio");
+    this.sound.src = src;
+    this.play = function(){
+    this.sound.play();
 
+}
 
+}
