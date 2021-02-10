@@ -51,8 +51,8 @@ const PAPER_VELOCITY_MULTIPLIER = 0.5;
 
 class Game {
 
-    constructor() {
-        this.world = new World(INIT_GRAVITY_VALUE, INIT_FRICTION_VALUE, GAME_WORLD_HEIGHT, GAME_WORLD_WIDTH);
+    constructor(health,hunger,hygiene,happiness) {
+        this.world = new World(INIT_GRAVITY_VALUE, INIT_FRICTION_VALUE, GAME_WORLD_HEIGHT, GAME_WORLD_WIDTH,health,hunger,hygiene,happiness);
     }
 
     update() {
@@ -61,7 +61,7 @@ class Game {
 };
 
 class World {
-    constructor(gravity, friction, height, width) {
+    constructor(gravity, friction, height, width,health,hunger,hygiene,happiness) {
         this.background_color = "black";
         this.friction = friction;
         this.gravity = gravity;
@@ -71,7 +71,7 @@ class World {
         this.sweets = [];
         this.papers = [];
 
-        this.player = new Player(PLAYER_IMAGE_URL, PLAYER_HEIGHT, PLAYER_WIDTH);
+        this.player = new Player(PLAYER_IMAGE_URL, PLAYER_HEIGHT, PLAYER_WIDTH,health,hunger,hygiene,happiness);
 
         this.height = height;
         this.width = width;
@@ -188,7 +188,7 @@ class GameObject {
 
 class Player extends GameObject {
 
-    constructor(spriteSheet, height, width) {
+    constructor(spriteSheet, height, width,health,hunger,hygiene,happiness) {
         super(spriteSheet, height, width, 0);
         this.jumping = true;
         this.direction = -1;
@@ -196,10 +196,10 @@ class Player extends GameObject {
         this.y = PLAYER_START_Y;
         this.animationFrame = 8;
         this.loopcounter = 0;
-        this.health = 100;
-        this.happiness = 50;
-        this.hunger = 10;
-        this.hygiene = 10;
+        this.health = health;
+        this.happiness = happiness;
+        this.hunger = hunger;
+        this.hygiene = hygiene;
     }
 
     jump() {

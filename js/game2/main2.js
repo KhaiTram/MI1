@@ -7,7 +7,35 @@ window.addEventListener("keydown", function(e) {
   }
 }, false);
 
+
+
 window.addEventListener("load", function (event) {
+
+  document.getElementById("game1").onclick = function() {startEngine()};
+
+  let health = document.getElementById("health");
+  let hunger = document.getElementById("hunger");
+  let hygiene = document.getElementById("hygiene");
+  let happiness = document.getElementById("happiness");
+
+  let healthValue = 0;
+  let hungerValue = 100;
+  let hygieneValue = 0;
+  let happinessValue = 0;
+
+  health.style.width= healthValue+ '%';
+  hunger.style.width= hungerValue+'%';
+  hygiene.style.width= hygieneValue+'%';
+  happiness.style.width= happiness+'%';
+  
+
+  function startEngine(){
+    engine.start();
+   }
+   
+   function stopEngine(){
+    engine.stop();
+   }
 
 
   "use strict";
@@ -70,7 +98,7 @@ window.addEventListener("load", function (event) {
 
   var controller = new Controller();
   var display = new Display(document.querySelector("canvas"));
-  var game = new Game();
+  var game = new Game(healtValue,hungerValue,hygieneValue,happinessValue);
   var engine = new Engine(1000 / 30, render, update);
 
 
@@ -83,6 +111,5 @@ window.addEventListener("load", function (event) {
 
   resize();
 
-  engine.start();
 
 });

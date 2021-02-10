@@ -47,15 +47,37 @@
 
   <div class="fluid-container">
 
-  <canvas></canvas>
-  <p>scroll down</p>
+    <button id="game1" type="button" class="btn btn-danger" >START!</button>
 
-  <script type="text/javascript" src="js/controller.js"></script>
-  <script type="text/javascript" src="js/game2/display2.js"></script>
-  <script type="text/javascript" src="js/engine.js"></script>
-  <script type="text/javascript" src="js/game2/main2.js"></script>
-  <script type="text/javascript" src="js/game2/game2.js"></script>
-</div>
+
+    <div class="fixed-top">
+      <div class="progress">
+        <div id="health" class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0"
+          aria-valuemax="100">Gesundheit</div>
+      </div>
+      <div class="progress">
+        <div id="hunger" class="progress-bar bg-info" role="progressbar" style="width: 0%" aria-valuenow="50" aria-valuemin="0"
+          aria-valuemax="100">Hunger</div>
+      </div>
+      <div class="progress">
+        <div id="hygiene" class="progress-bar bg-warning" role="progressbar" style="width: 0%" aria-valuenow="75" aria-valuemin="0"
+          aria-valuemax="100">Hygiene</div>
+      </div>
+      <div class="progress">
+        <div id="happyness" class="progress-bar bg-danger" role="progressbar" style="width: 0%" aria-valuenow="100" aria-valuemin="0"
+          aria-valuemax="100">Happyness</div>
+      </div>
+    </div>
+
+    <canvas></canvas>
+    <p>scroll down</p>
+
+    <script type="text/javascript" src="js/controller.js"></script>
+    <script type="text/javascript" src="js/game2/display2.js"></script>
+    <script type="text/javascript" src="js/engine.js"></script>
+    <script type="text/javascript" src="js/game2/main2.js"></script>
+    <script type="text/javascript" src="js/game2/game2.js"></script>
+  </div>
 
 </body>
 
