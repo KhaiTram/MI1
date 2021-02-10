@@ -86,3 +86,9 @@ width: 100%;
 	position:relative;
 	top:1px;
 }
+.progress{
+  font-size: 1rem; 
+}
+.progress-bar{
+  color:black;
+}
