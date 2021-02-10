@@ -17,6 +17,10 @@ const PLAYER_WIDTH = 130;
 const PLAYER_VELOCITY_X = 20;
 const PLAYER_JUMP = 50;
 const ANIMATION_DELAY = 10;
+var soundJump;
+var soundYay;
+var soundEat;
+
 
 //Virus Konstanten
 const VIRUS_IMAGE_URL = "pictures/game/corona_pic.png";
@@ -25,6 +29,7 @@ const VIRUS_WIDTH = 100;
 const INITIAL_VIRUS_VELOCITY = 4;
 const VIRUS_VELOCITY_MULTIPLIER = 0.5;
 const INITIAL_SPAWN_DELAY = 100;
+var soundHit;
 
 //Food Konstanten
 const SUSHI_IMAGE_URL = "pictures/game/sushi.png";
@@ -85,6 +90,14 @@ class World {
 
         this.stop=false;
         this.gameDuration= 0;
+
+        soundJump = new sound("sounds/sound_jump.mp3")
+        soundYay = new sound("sounds/sound_yay.mp3")
+        soundEat = new sound("sounds/sound_ham.mp3")
+        soundHit = new sound("sounds/sound_corona_hit.mp3")
+
+
+
     }
 
     collidePlayer(object) {
@@ -147,22 +160,38 @@ class World {
             
             this.sushis.forEach((sushi) => {
                 sushi.updatePos();
-                this.collideObject(this.player,sushi,(player,paper)=>{player.hunger++;paper.y=1200;});
+                this.collideObject(this.player,sushi,(player,paper)=>{
+                    player.hunger++;
+                    paper.y=1200;
+                    soundEat.play();
+                });
             })
             
             this.sweets.forEach((sweet) => {
                 sweet.updatePos();
-                this.collideObject(this.player,sweet,(player,sweet)=>{player.hunger++;sweet.y=1200;});
+                this.collideObject(this.player,sweet,(player,sweet)=>{
+                    player.hunger++;
+                    sweet.y=1200;
+                    soundEat.play();
+                });
             })
             
             this.viruses.forEach((virus) => {
+                
                 virus.updatePos();
-                this.collideObject(this.player,virus,(player,virus)=>{player.health-=3;virus.y=1200;});
+                this.collideObject(this.player,virus,(player,virus)=>{
+                    player.health-=3;
+                    virus.y=1200;
+                    soundHit.play()});
             })
             
             this.papers.forEach((paper) => {
                 paper.updatePos();
-                this.collideObject(this.player,paper,(player,paper)=>{player.hygiene++;paper.y=1200;});
+                this.collideObject(this.player,paper,(player,paper)=>{
+                    player.hygiene++;
+                    paper.y=1200;
+                    soundYay.play();
+                });
             })
         }
             
@@ -204,7 +233,7 @@ class Player extends GameObject {
 
     jump() {
         if (!this.jumping) {
-
+            soundJump.play();
             this.jumping = true;
             this.velocityY -= PLAYER_JUMP;
             this.animationFrame = 8;
@@ -277,5 +306,15 @@ function getImg(imageURL) {
     return img;
 }
 
+function sound(src) {
+    this.sound = document.createElement("audio");
+    this.sound.src = src;
+    this.play = function(){
+    this.sound.play();
 
+    this.stop = function(){
+        this.sound.pause();
+      }
+}
 
+}

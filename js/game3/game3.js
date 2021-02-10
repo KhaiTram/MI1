@@ -1,4 +1,4 @@
-//Author: Khai Tram
+//Author: Robert Nor
 
 //Welt Konstanten
 const INIT_GRAVITY_VALUE = 3;
