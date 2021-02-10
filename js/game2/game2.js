@@ -83,7 +83,7 @@ class World {
         this.foodSpeed = INITIAL_FOODS_VELOCITY;
         this.paperSpeed = INITIAL_PAPER_VELOCITY;
 
-
+        this.stop=false;
         this.gameDuration= 0;
     }
 
@@ -136,34 +136,37 @@ class World {
 
     update() {
         this.gameDuration++;
-        if (this.gameDuration < 1800){
-        this.player.velocityY += this.gravity;
-        this.player.updatePlayerPos();
-        this.player.velocityX *= this.friction;
-        this.collidePlayer(this.player);
-        this.spawnObject();
+        if (this.gameDuration == 1800){ this.stop=true;};
+        if (!this.stop){
 
-        this.sushis.forEach((sushi) => {
-            sushi.updatePos();
-            this.collideObject(this.player,sushi,(player,paper)=>{player.hunger++;paper.y=1200;});
-        })
-
-        this.sweets.forEach((sweet) => {
-            sweet.updatePos();
-            this.collideObject(this.player,sweet,(player,sweet)=>{player.hunger++;sweet.y=1200;});
-        })
-
-        this.viruses.forEach((virus) => {
-            virus.updatePos();
-            this.collideObject(this.player,virus,(player,virus)=>{player.health-=3;virus.y=1200;});
-        })
-
-        this.papers.forEach((paper) => {
-            paper.updatePos();
-            this.collideObject(this.player,paper,(player,paper)=>{player.hygiene++;paper.y=1200;});
-        })
+            this.player.velocityY += this.gravity;
+            this.player.updatePlayerPos();
+            this.player.velocityX *= this.friction;
+            this.collidePlayer(this.player);
+            this.spawnObject();
             
-        };
+            this.sushis.forEach((sushi) => {
+                sushi.updatePos();
+                this.collideObject(this.player,sushi,(player,paper)=>{player.hunger++;paper.y=1200;});
+            })
+            
+            this.sweets.forEach((sweet) => {
+                sweet.updatePos();
+                this.collideObject(this.player,sweet,(player,sweet)=>{player.hunger++;sweet.y=1200;});
+            })
+            
+            this.viruses.forEach((virus) => {
+                virus.updatePos();
+                this.collideObject(this.player,virus,(player,virus)=>{player.health-=3;virus.y=1200;});
+            })
+            
+            this.papers.forEach((paper) => {
+                paper.updatePos();
+                this.collideObject(this.player,paper,(player,paper)=>{player.hygiene++;paper.y=1200;});
+            })
+        }
+            
+        
     }
 }
 

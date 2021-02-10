@@ -2,11 +2,13 @@
 
 html { height:100%; width:100%; }
 
-body {
 
+
+
+body {
+  
   align-content:center;
   align-items:space-around;
-  background-color:#1979d8;
   display:grid;
   justify-items:center;
   height:100%;
@@ -31,13 +33,15 @@ body {
   src: url(../fonts/IBM_Plex_Sans/IBMPlexSans-Bold.ttf);
 }
 
-
 @font-face {
   font-family: AmaticSC;
   src: url(../fonts/IBM_Plex_Sans/IBMPlexSans-Bold.ttf);
   font-weight: bold;
 }
 
-canvas { image-rendering:pixelated; }
+canvas { 
+  image-rendering:pixelated; 
+
+}
 
 

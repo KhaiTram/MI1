@@ -21,7 +21,9 @@
 	top:1px;
 }
 
-
+.card-body{
+	text-align: center;
+}
 
 .campaign{
    text-align: left;

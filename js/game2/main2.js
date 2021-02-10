@@ -1,5 +1,11 @@
 //author Khai
 
+window.addEventListener("keydown", function(e) {
+  // space and arrow keys
+  if([32, 37, 38, 39, 40].indexOf(e.code) > -1) {
+      e.preventDefault();
+  }
+}, false);
 
 window.addEventListener("load", function (event) {
 
@@ -11,6 +17,8 @@ window.addEventListener("load", function (event) {
     controller.keyDownUp(event.type, event.keyCode);
 
   };
+
+  
 
   var resize = ()=> {
 
@@ -42,6 +50,7 @@ window.addEventListener("load", function (event) {
     })
   
     display.render();
+
   };
 
   var update = function () {
@@ -52,6 +61,8 @@ window.addEventListener("load", function (event) {
     if (controller.left.down && !controller.left.blocked ) { game.world.player.animationFrame=0 ; controller.left.blocked=true; }
     if (controller.right.down && !controller.left.blocked) { game.world.player.animationFrame=4; controller.left.blocked=true; }
 
+    if (game.world.stop) {engine.stop()};
+    
     game.update();
   };
 
