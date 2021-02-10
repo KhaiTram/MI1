@@ -1,3 +1,25 @@
+.buttonGame {
+	background:linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
+	background-color:#ffec64;
+	border-radius:42px;
+	border:2px solid #ffaa22;
+	display:inline-block;
+	cursor:pointer;
+	color:#333333;
+	font-family:Arial;
+	font-size:18px;
+	font-weight:bold;
+	padding:8px 9px;
+	text-decoration:none;
+}
+.buttonGame:hover {
+	background:linear-gradient(to bottom, #ffab23 5%, #ffec64 100%);
+	background-color:#ffab23;
+}
+.buttonGame:active {
+	position:relative;
+	top:1px;
+}
 
 
 
